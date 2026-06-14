@@ -73,8 +73,8 @@ export function Footer() {
           <div>
             <p className="label-sm mb-4 text-faint">Now</p>
             <p className="max-w-[28ch] text-sm text-muted">
-              MS Computer Science @ University at Buffalo. Open to AI/ML
-              internships & research-engineering roles.
+              MS Computer Science @ University at Buffalo. Open to full-time
+              AI/ML & research-engineering roles.
             </p>
           </div>
 

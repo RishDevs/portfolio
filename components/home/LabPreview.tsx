@@ -18,7 +18,7 @@ export function LabPreview() {
       <div className="wrap">
         <div className="mb-12 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="label mb-5">/ 04 — The Lab</p>
+            <p className="label mb-5">§ 05 — Field Logs</p>
             <RevealLines
               className="display-xl max-w-[16ch]"
               lines={["A live archive of", "experiments & notes."]}

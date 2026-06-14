@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { RevealLines, Reveal } from "@/components/Reveal"
+import { Reveal } from "@/components/Reveal"
 
 type Node = {
   id: string
@@ -16,9 +16,9 @@ const NODES: Node[] = [
     id: "data",
     label: "Data",
     blurb:
-      "Ingestion, validation, and caching pipelines that turn messy sources into clean, reproducible training and retrieval corpora.",
+      "Ingestion, validation, and caching pipelines that turn messy sources into clean, reproducible corpora.",
     tools: ["Wikipedia REST API", "TSV parsing", "retry/caching", "Pandas"],
-    metric: "Reliable, validated ingestion",
+    metric: "Validated ingestion",
   },
   {
     id: "embeddings",
@@ -26,15 +26,15 @@ const NODES: Node[] = [
     blurb:
       "Representation learning that maps text and images into a shared semantic space using contrastive objectives.",
     tools: ["ViT-B/32", "Transformers", "Contrastive learning", "HuggingFace"],
-    metric: "Cross-lingual EN/ES/FR alignment",
+    metric: "EN/ES/FR alignment",
   },
   {
     id: "retrieval",
     label: "Retrieval",
     blurb:
-      "Vector search over learned embeddings with latency-aware indexing strategies for high-throughput semantic search.",
+      "Vector search over learned embeddings with latency-aware indexing for high-throughput semantic search.",
     tools: ["FAISS (FlatIP/HNSW)", "pgvector", "Redis"],
-    metric: "91.7% Recall@1 · <1ms",
+    metric: "91.7% Recall@1",
   },
   {
     id: "reasoning",
@@ -50,15 +50,15 @@ const NODES: Node[] = [
     blurb:
       "Cost-aware model selection using multi-signal decision logic — intent, risk, and retrieval confidence.",
     tools: ["Dynamic routing", "Risk scoring", "Intent classify"],
-    metric: "Cost-optimized selection",
+    metric: "Cost-optimized",
   },
   {
     id: "evaluation",
     label: "Evaluation",
     blurb:
       "Rigorous measurement: ranking quality, classification metrics, latency, and cost — not just accuracy.",
-    tools: ["Recall@K", "mAP", "F1 / ROC-AUC", "P50/P95", "Cost metrics"],
-    metric: "0.93 mAP · tracked SLAs",
+    tools: ["Recall@K", "mAP", "F1 / ROC-AUC", "P50/P95", "Cost"],
+    metric: "0.93 mAP",
   },
   {
     id: "deployment",
@@ -66,7 +66,7 @@ const NODES: Node[] = [
     blurb:
       "Serving, observability, and rollback safety — turning models into reliable, monitored services.",
     tools: ["FastAPI", "Docker", "CI/CD", "Prometheus/Grafana"],
-    metric: "Observable, rollback-safe",
+    metric: "Rollback-safe",
   },
 ]
 
@@ -75,49 +75,49 @@ export function SystemPipeline() {
   const node = NODES[active]
 
   return (
-    <section
-      className="section-pad relative border-y border-[var(--color-line)] bg-[var(--color-surface)]"
-      id="system"
-    >
+    <section className="paper section-pad border-t-2 border-[var(--color-ink)]" id="system">
       <div className="wrap">
         <div className="mb-12 max-w-3xl">
-          <p className="label mb-5">/ 02 — System Map</p>
-          <RevealLines
-            className="display-xl"
-            lines={["The pipeline behind", "everything I build."]}
-          />
-          <p className="mt-6 max-w-xl text-muted">
-            My work sits at the intersection of ML modeling and software
-            systems. Tap a stage to see the tools and proof behind it.
+          <p className="spec text-[var(--color-vermillion)]">§ 02 — System Schematic</p>
+          <h2 className="display-serif mt-4 text-[clamp(2.4rem,7vw,6rem)]">
+            The pipeline behind
+            <br />
+            <span className="italic">everything I build.</span>
+          </h2>
+          <p className="mt-6 max-w-xl text-ink-soft">
+            ML modeling meets software systems. Select a stage to read the tools
+            and proof behind it.
           </p>
         </div>
 
-        {/* pipeline rail */}
-        <Reveal className="relative">
+        {/* schematic rail */}
+        <Reveal>
           <div className="hide-scrollbar -mx-2 overflow-x-auto px-2 pb-4">
-            <div className="flex min-w-max items-center gap-2">
+            <div className="flex min-w-max items-stretch">
               {NODES.map((n, i) => (
-                <div key={n.id} className="flex items-center gap-2">
+                <div key={n.id} className="flex items-center">
                   <button
                     onClick={() => setActive(i)}
                     data-cursor
-                    className={`group relative rounded-full border px-5 py-3 font-mono text-sm transition-all duration-300 ${
+                    className={`group flex flex-col items-start border px-5 py-4 text-left transition-all duration-300 ${
                       active === i
-                        ? "border-green bg-green/10 text-green"
-                        : "border-[var(--color-line-2)] text-muted hover:text-text"
+                        ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)]"
+                        : "border-[var(--color-rule)] text-ink-soft hover:border-[var(--color-ink)] hover:text-ink"
                     }`}
                   >
-                    <span className="mr-2 text-xs text-faint">
+                    <span
+                      className={`index-num text-[0.65rem] ${
+                        active === i
+                          ? "text-[var(--color-lime)]"
+                          : "text-ink-faint"
+                      }`}
+                    >
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {n.label}
+                    <span className="font-mono text-sm">{n.label}</span>
                   </button>
                   {i < NODES.length - 1 && (
-                    <span
-                      className={`h-px w-6 transition-colors duration-300 sm:w-10 ${
-                        active === i ? "bg-green" : "bg-[var(--color-line-2)]"
-                      }`}
-                    />
+                    <span className="h-px w-5 bg-[var(--color-rule)] sm:w-8" />
                   )}
                 </div>
               ))}
@@ -125,28 +125,31 @@ export function SystemPipeline() {
           </div>
         </Reveal>
 
-        {/* detail panel */}
-        <div className="card mt-8 grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:p-12">
-          <div key={node.id} style={{ animation: "fadeUp 0.5s ease" }}>
-            <p className="label-sm text-green">
-              Stage {String(active + 1).padStart(2, "0")} / {NODES.length}
+        {/* detail */}
+        <div className="mt-8 grid gap-px overflow-hidden border border-[var(--color-ink)] bg-[var(--color-ink)] md:grid-cols-[1.5fr_1fr]">
+          <div
+            key={node.id}
+            className="bg-[var(--color-paper)] p-8 md:p-12"
+            style={{ animation: "fadeUp 0.5s ease" }}
+          >
+            <p className="spec text-[var(--color-vermillion)]">
+              Stage {String(active + 1).padStart(2, "0")} / {NODES.length} — {node.label}
             </p>
-            <h3 className="display-lg mt-4">{node.label}</h3>
-            <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-muted">
+            <p className="mt-5 max-w-[52ch] text-xl leading-relaxed text-ink md:text-2xl">
               {node.blurb}
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {node.tools.map((t) => (
-                <span key={t} className="chip">
+                <span key={t} className="chip-ink">
                   {t}
                 </span>
               ))}
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-6 rounded-2xl border border-[var(--color-line)] bg-[var(--color-bg)] p-7">
-            <p className="label-sm text-faint">Proof</p>
-            <p className="display-lg text-gradient">{node.metric}</p>
-            <p className="font-mono text-xs text-faint">
+          <div className="flex flex-col justify-between gap-6 bg-[var(--color-ink)] p-8 text-[var(--color-paper)] md:p-10">
+            <p className="spec text-[var(--color-lime)]">Proof</p>
+            <p className="display-lg text-[var(--color-paper)]">{node.metric}</p>
+            <p className="font-mono text-[0.65rem] leading-relaxed text-[var(--color-paper)]/60">
               data → embeddings → retrieval → reasoning → routing → evaluation →
               deployment
             </p>

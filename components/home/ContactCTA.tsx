@@ -15,7 +15,7 @@ export function ContactCTA() {
         }}
       />
       <div className="wrap text-center">
-        <p className="label mb-8">/ 05 — Let&apos;s talk</p>
+        <p className="label mb-8">§ 06 — Let&apos;s talk</p>
         <RevealLines
           className="display-hero mx-auto max-w-[16ch]"
           lineClassName="mx-auto"
@@ -23,9 +23,9 @@ export function ContactCTA() {
         />
         <Reveal delay={120}>
           <p className="mx-auto mt-8 max-w-xl text-lg text-muted">
-            I&apos;m looking for AI/ML internships, research-engineering roles,
-            and teams building real-world intelligent systems. If that&apos;s
-            you, let&apos;s build.
+            I&apos;m looking for full-time AI/ML roles, research-engineering
+            positions, and teams building real-world intelligent systems. If
+            that&apos;s you, let&apos;s build.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <MagneticButton

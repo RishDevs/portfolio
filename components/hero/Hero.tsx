@@ -1,10 +1,10 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { site } from "@/lib/site"
 import { MagneticButton } from "@/components/MagneticButton"
+import { Scramble } from "@/components/Scramble"
 
 const ShaderBackground = dynamic(
   () => import("./ShaderBackground").then((m) => m.ShaderBackground),
@@ -20,44 +20,55 @@ const HEADLINE = [
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
-  const rootRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    // mount canvas after first paint
     const id = requestAnimationFrame(() => setMounted(true))
     return () => cancelAnimationFrame(id)
   }, [])
 
   return (
-    <section
-      ref={rootRef}
-      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden"
-    >
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden text-text">
       {/* WebGL background */}
       <div className="absolute inset-0">{mounted && <ShaderBackground />}</div>
-      {/* legibility gradient */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(2,10,25,0.55) 0%, rgba(2,10,25,0.1) 35%, rgba(2,10,25,0.5) 100%)",
+            "linear-gradient(180deg, rgba(7,6,10,0.6) 0%, rgba(7,6,10,0.12) 32%, rgba(7,6,10,0.72) 100%)",
         }}
       />
 
-      {/* top meta row */}
-      <div className="wrap relative z-10 flex items-center justify-between pt-28 md:pt-32">
-        <p className="label hidden max-w-[16ch] leading-relaxed sm:block">
-          AI Systems · Retrieval · Agents
-        </p>
-        <p className="label hidden text-right leading-relaxed md:block">
-          {site.location}
-          <br />
-          MS CSE · Univ. at Buffalo
-        </p>
+      {/* crop marks */}
+      <span className="crop crop-tl" aria-hidden />
+      <span className="crop crop-tr" aria-hidden />
+      <span className="crop crop-bl" aria-hidden />
+      <span className="crop crop-br" aria-hidden />
+
+      {/* MASTHEAD */}
+      <div className="wrap relative z-10 pt-24 md:pt-28">
+        <div className="rule" style={{ background: "rgba(245,247,250,0.5)" }} />
+        <div className="flex flex-wrap items-center justify-between gap-2 py-3">
+          <span className="spec text-text">RK — AI Systems Journal</span>
+          <span className="spec text-muted">Vol. 2026 / No. 01</span>
+          <span className="spec hidden text-muted sm:inline">
+            {site.location} · MS CSE
+          </span>
+        </div>
+        <div className="rule-faint" style={{ background: "rgba(245,247,250,0.18)" }} />
       </div>
 
-      {/* headline */}
-      <div className="wrap relative z-10 pb-10">
+      {/* HEADLINE */}
+      <div className="wrap relative z-10 flex flex-1 flex-col justify-center py-12">
+        <div className="mb-6 flex items-center gap-4">
+          <span className="index-num text-sm text-[var(--color-vermillion)]">
+            (01)
+          </span>
+          <Scramble
+            text="RETRIEVAL / AGENTS / RAG INFRA / EVALUATION"
+            className="spec text-muted"
+          />
+        </div>
+
         <h1 className="display-hero">
           {HEADLINE.map((line, i) => (
             <span key={i} className="reveal-line overflow-hidden">
@@ -66,13 +77,15 @@ export function Hero() {
                 style={{
                   transform: "translateY(110%)",
                   animation: `heroLine 1s cubic-bezier(0.16,1,0.3,1) ${
-                    0.35 + i * 0.12
+                    0.3 + i * 0.1
                   }s forwards`,
                 }}
               >
                 {line[0]}{" "}
                 {i === 1 || i === 2 ? (
-                  <span className="serif-accent text-gradient">{line[1]}</span>
+                  <span className="serif-accent text-[var(--color-lime)]">
+                    {line[1]}
+                  </span>
                 ) : (
                   line[1]
                 )}
@@ -84,18 +97,16 @@ export function Hero() {
         <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <p
             className="max-w-xl text-[1.05rem] leading-relaxed text-muted opacity-0"
-            style={{ animation: "fadeUp 1s ease 0.9s forwards" }}
+            style={{ animation: "fadeUp 1s ease 0.85s forwards" }}
           >
             {site.subtitle}
           </p>
-
           <div
             className="flex flex-wrap items-center gap-3 opacity-0"
-            style={{ animation: "fadeUp 1s ease 1.05s forwards" }}
+            style={{ animation: "fadeUp 1s ease 1s forwards" }}
           >
             <MagneticButton href="/work" className="btn btn-primary">
-              Explore Work
-              <span aria-hidden>→</span>
+              Explore Work <span aria-hidden>→</span>
             </MagneticButton>
             <MagneticButton href="/resume" className="btn btn-ghost">
               View Résumé
@@ -104,21 +115,19 @@ export function Hero() {
         </div>
       </div>
 
-      {/* bottom status bar */}
-      <div className="relative z-10 border-t hairline border-t-[var(--color-line)] bg-[rgba(2,10,25,0.4)] backdrop-blur-sm">
-        <div className="wrap flex items-center justify-between py-4">
-          <p className="label-sm flex items-center gap-2 text-muted">
-            <span className="inline-block h-2 w-2 rounded-full bg-green text-glow-green" />
-            <span className="text-glow-green">Available</span> · focused on
-            retrieval, agents & reliable LLM infra
-          </p>
-          <Link
-            href="/work"
-            className="label-sm hidden items-center gap-2 text-muted transition-colors hover:text-text sm:flex"
-            data-cursor
-          >
+      {/* VINTAGE FOOTER TICKER */}
+      <div className="wrap relative z-10 pb-8">
+        <div className="rule-faint" style={{ background: "rgba(245,247,250,0.18)" }} />
+        <div className="flex items-center justify-between gap-4 py-3">
+          <span className="spec text-muted">
+            Est. 2021 · B.Tech IARE → 2025 · MS Buffalo
+          </span>
+          <span className="spec hidden text-text md:inline">
+            Open to full-time AI/ML roles
+          </span>
+          <span className="spec flex items-center gap-2 text-[var(--color-lime)]">
             Scroll <span aria-hidden>↓</span>
-          </Link>
+          </span>
         </div>
       </div>
 

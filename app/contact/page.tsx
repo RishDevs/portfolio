@@ -8,7 +8,7 @@ import { site } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Rishi Kolluru — open to AI/ML internships, research-engineering roles, and teams building real-world intelligent systems.",
+    "Get in touch with Rishi Kolluru — open to full-time AI/ML roles, research-engineering positions, and teams building real-world intelligent systems.",
 }
 
 const CHANNELS = [
@@ -25,7 +25,7 @@ export default function ContactPage() {
         index="/contact"
         label="Let's build"
         titleLines={["Let's", "talk."]}
-        blurb="I'm looking for AI/ML internships, research-engineering opportunities, and teams building real-world intelligent systems. If you're hiring for retrieval, agents, or applied research engineering — let's talk."
+        blurb="I'm looking for full-time AI/ML roles, research-engineering positions, and teams building real-world intelligent systems. If you're hiring for retrieval, agents, or applied research engineering — let's talk."
       />
 
       <section className="wrap pb-32">

@@ -13,10 +13,20 @@
   --color-text: #f5f7fa;
   --color-muted: #a7b0c0;
   --color-faint: #5f6b80;
-  --color-green: #b8ff3d;
+  --color-green: #c6f24e;
+  --color-lime: #c6f24e;
   --color-cyan: #6debff;
   --color-violet: #8c6cff;
   --color-error: #ff5c7a;
+
+  /* vintage / paper world */
+  --color-paper: #e9e3d4;
+  --color-paper-2: #ded7c4;
+  --color-ink: #181712;
+  --color-ink-soft: #4a463c;
+  --color-ink-faint: #8a8472;
+  --color-vermillion: #e5533d;
+  --color-rule: #c3bca7;
 
   --font-display: var(--font-display), "Space Grotesk", sans-serif;
   --font-sans: var(--font-display), "Space Grotesk", sans-serif;
@@ -400,6 +410,163 @@ html.lenis body {
 
 .animate-spin-slow {
   animation: spin-slow 18s linear infinite;
+}
+
+/* ============================================================
+   VINTAGE / PAPER WORLD
+   ============================================================ */
+.paper {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  position: relative;
+}
+/* printed paper texture: subtle halftone dots + warm tint */
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    var(--color-rule) 0.6px,
+    transparent 0.7px
+  );
+  background-size: 6px 6px;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+.paper > * {
+  position: relative;
+}
+
+.ink-rule {
+  border-color: var(--color-ink);
+}
+.rule {
+  height: 1px;
+  width: 100%;
+  background: var(--color-ink);
+}
+.rule-faint {
+  height: 1px;
+  width: 100%;
+  background: var(--color-rule);
+}
+
+/* masthead spec line — like a vintage technical journal */
+.spec {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* big editorial index numerals */
+.index-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* serif display for the vintage-editorial voice */
+.display-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+/* crop / registration marks */
+.crop {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: currentColor;
+  opacity: 0.55;
+}
+.crop-tl {
+  top: 16px;
+  left: 16px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.crop-tr {
+  top: 16px;
+  right: 16px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+.crop-bl {
+  bottom: 16px;
+  left: 16px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+.crop-br {
+  bottom: 16px;
+  right: 16px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* paper-world buttons */
+.btn-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 1px solid var(--color-ink);
+}
+.btn-ink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-vermillion);
+  transform: translateY(101%);
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.btn-ink:hover {
+  color: var(--color-paper);
+}
+.btn-ink:hover::after {
+  transform: translateY(0);
+}
+
+.btn-paper-ghost {
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+}
+.btn-paper-ghost::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-ink);
+  transform: translateY(101%);
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.btn-paper-ghost:hover {
+  color: var(--color-paper);
+}
+.btn-paper-ghost:hover::after {
+  transform: translateY(0);
+}
+
+/* paper chip */
+.chip-ink {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 99px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+/* new-gen flash: scramble cursor on decode text */
+.decode {
+  font-family: var(--font-mono);
 }
 
 /* ============================================================

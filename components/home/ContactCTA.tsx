@@ -11,7 +11,7 @@ export function ContactCTA() {
         className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 h-[140%] -translate-y-1/2"
         style={{
           background:
-            "radial-gradient(60% 50% at 50% 50%, rgba(140,108,255,0.14), transparent 70%)",
+            "radial-gradient(60% 50% at 50% 50%, rgba(45,125,255,0.16), transparent 70%)",
         }}
       />
       <div className="wrap text-center">

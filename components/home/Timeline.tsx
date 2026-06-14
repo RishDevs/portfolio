@@ -99,7 +99,7 @@ export function Timeline() {
                       }`}
                     />
                     <h3 className="display-lg">{item.title}</h3>
-                    <p className="mt-1 font-mono text-sm text-[var(--color-violet)]">
+                    <p className="mt-1 font-mono text-sm text-[var(--color-blue)]">
                       {item.place}
                     </p>
                     <p className="mt-4 max-w-[60ch] text-muted">{item.body}</p>

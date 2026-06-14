@@ -4,32 +4,35 @@
    DESIGN TOKENS
    ============================================================ */
 @theme {
-  --color-bg: #07050f;
-  --color-bg-2: #0e0820;
-  --color-surface: #0d0a1a;
-  --color-surface-2: #171125;
-  --color-line: #271c3e;
-  --color-line-2: #3a2a58;
-  --color-text: #f4f1fa;
-  --color-muted: #aaa0c2;
-  --color-faint: #6d6388;
-  /* electric flash palette — magenta + violet */
-  --color-green: #ff2d9c;
-  --color-lime: #ff2d9c;
-  --color-magenta: #ff2d9c;
-  --color-pink: #ff5db1;
-  --color-cyan: #b069ff;
-  --color-violet: #8a5bff;
+  --color-bg: #050912;
+  --color-bg-2: #0a1428;
+  --color-surface: #091122;
+  --color-surface-2: #111d36;
+  --color-line: #1b2942;
+  --color-line-2: #2a3d61;
+  --color-text: #eaf1ff;
+  --color-muted: #9fb2d4;
+  --color-faint: #5f7299;
+  /* Superman techno palette — electric blue + red + shield yellow */
+  --color-blue: #2d7dff;
+  --color-red: #ff2d45;
+  --color-yellow: #ffd60a;
+  --color-green: #2d7dff;
+  --color-lime: #2d7dff;
+  --color-magenta: #2d7dff;
+  --color-pink: #ff2d45;
+  --color-cyan: #ff2d45;
+  --color-violet: #ffd60a;
   --color-error: #ff4d6d;
 
   /* legacy aliases (kept so old utility classes still resolve) */
-  --color-paper: #100a20;
-  --color-paper-2: #171026;
-  --color-ink: #f4f1fa;
-  --color-ink-soft: #aaa0c2;
-  --color-ink-faint: #6d6388;
-  --color-vermillion: #ff2d9c;
-  --color-rule: #3a2a58;
+  --color-paper: #0a1428;
+  --color-paper-2: #111d36;
+  --color-ink: #eaf1ff;
+  --color-ink-soft: #9fb2d4;
+  --color-ink-faint: #5f7299;
+  --color-vermillion: #ff2d45;
+  --color-rule: #2a3d61;
 
   --font-display: var(--font-display), "Space Grotesk", sans-serif;
   --font-sans: var(--font-display), "Space Grotesk", sans-serif;
@@ -64,8 +67,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-magenta);
-  color: #0a0612;
+  background: var(--color-blue);
+  color: #eaf1ff;
 }
 
 a {
@@ -185,8 +188,8 @@ html.lenis body {
   background: linear-gradient(
     100deg,
     var(--color-text) 0%,
-    var(--color-magenta) 50%,
-    var(--color-violet) 100%
+    var(--color-blue) 55%,
+    #6fb0ff 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -194,8 +197,8 @@ html.lenis body {
 }
 
 .text-glow-green {
-  color: var(--color-magenta);
-  text-shadow: 0 0 28px rgba(255, 45, 156, 0.4);
+  color: var(--color-blue);
+  text-shadow: 0 0 28px rgba(45, 125, 255, 0.45);
 }
 
 /* ============================================================
@@ -279,20 +282,20 @@ html.lenis body {
 }
 
 .btn-primary {
-  background: var(--color-magenta);
-  color: #120417;
+  background: var(--color-blue);
+  color: #ffffff;
 }
 .btn-primary::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--color-violet);
+  background: var(--color-red);
   transform: translateY(101%);
   transition: transform 0.5s var(--ease-out-expo);
 }
 .btn-primary:hover {
-  color: #f4f1fa;
+  color: #ffffff;
 }
 .btn-primary:hover::after {
   transform: translateY(0);

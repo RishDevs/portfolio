@@ -86,19 +86,19 @@ const fragment = /* glsl */ `
     float glow = smoothstep(0.55, 0.0, d) * 0.5;
     f += glow * (0.6 + 0.4 * sin(uTime * 0.6));
 
-    // palette — electric flash: near-black plum with magenta + violet
-    vec3 base    = vec3(0.027, 0.020, 0.059); // #07050F
-    vec3 deep    = vec3(0.102, 0.039, 0.180); // #1A0A2E deep purple
-    vec3 magenta = vec3(1.000, 0.176, 0.612);  // #FF2D9C
-    vec3 violet  = vec3(0.541, 0.357, 1.000);  // #8A5BFF
-    vec3 pink    = vec3(1.000, 0.365, 0.694);  // #FF5DB1
+    // palette — Superman techno: midnight navy + electric blue, red flares, yellow sparks
+    vec3 base   = vec3(0.020, 0.035, 0.071); // #050912
+    vec3 deep   = vec3(0.039, 0.106, 0.255); // #0A1B41 deep blue
+    vec3 blue   = vec3(0.176, 0.490, 1.000);  // #2D7DFF
+    vec3 red    = vec3(1.000, 0.176, 0.271);  // #FF2D45
+    vec3 yellow = vec3(1.000, 0.839, 0.039);  // #FFD60A
 
     vec3 col = mix(base, deep, smoothstep(-0.6, 0.6, f));
-    col = mix(col, magenta * 0.6, smoothstep(0.1, 0.78, f) * 0.78);
-    col = mix(col, violet * 0.5, smoothstep(0.3, 0.95, length(r)) * 0.5);
-    col += pink * smoothstep(0.8, 1.05, f) * 0.55;
-    col += magenta * glow * 0.45;
-    col += violet * glow * 0.2;
+    col = mix(col, blue * 0.7, smoothstep(0.05, 0.75, f) * 0.85);
+    col = mix(col, red * 0.45, smoothstep(0.45, 0.98, length(r)) * 0.45);
+    col += yellow * smoothstep(0.86, 1.06, f) * 0.4;
+    col += blue * glow * 0.5;
+    col += red * glow * 0.18;
 
     // vignette
     float vig = smoothstep(1.25, 0.25, length((uv - 0.5) * vec2(uAspect, 1.0)));

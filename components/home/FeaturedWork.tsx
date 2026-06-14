@@ -6,9 +6,9 @@ import { projects } from "@/lib/projects"
 import { Reveal, RevealLines } from "@/components/Reveal"
 
 const GRADIENTS = [
-  "radial-gradient(120% 120% at 20% 20%, rgba(255,45,156,0.55), transparent 55%), radial-gradient(120% 120% at 85% 80%, rgba(138,91,255,0.5), transparent 55%)",
-  "radial-gradient(120% 120% at 80% 20%, rgba(255,93,177,0.5), transparent 55%), radial-gradient(120% 120% at 20% 90%, rgba(176,105,255,0.5), transparent 55%)",
-  "radial-gradient(120% 120% at 30% 80%, rgba(138,91,255,0.55), transparent 55%), radial-gradient(120% 120% at 80% 10%, rgba(255,45,156,0.45), transparent 55%)",
+  "radial-gradient(120% 120% at 20% 20%, rgba(45,125,255,0.6), transparent 55%), radial-gradient(120% 120% at 85% 80%, rgba(255,45,69,0.45), transparent 55%)",
+  "radial-gradient(120% 120% at 80% 20%, rgba(45,125,255,0.55), transparent 55%), radial-gradient(120% 120% at 20% 90%, rgba(255,214,10,0.4), transparent 55%)",
+  "radial-gradient(120% 120% at 30% 80%, rgba(255,45,69,0.5), transparent 55%), radial-gradient(120% 120% at 80% 10%, rgba(45,125,255,0.55), transparent 55%)",
 ]
 
 function Card({ project, index }: { project: (typeof projects)[number]; index: number }) {

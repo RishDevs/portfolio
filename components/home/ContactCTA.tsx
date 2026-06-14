@@ -49,13 +49,6 @@ export function ContactCTA() {
             >
               GitHub
             </MagneticButton>
-            <MagneticButton
-              href={site.resumePath}
-              external
-              className="btn btn-ghost"
-            >
-              Résumé ↓
-            </MagneticButton>
           </div>
         </Reveal>
       </div>

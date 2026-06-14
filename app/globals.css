@@ -13,17 +13,17 @@
   --color-text: #eaf1ff;
   --color-muted: #9fb2d4;
   --color-faint: #5f7299;
-  /* Superman techno palette — electric blue + red + shield yellow */
+  /* techno palette — electric blue + red (two colors only) */
   --color-blue: #2d7dff;
   --color-red: #ff2d45;
-  --color-yellow: #ffd60a;
+  --color-yellow: #ff2d45;
   --color-green: #2d7dff;
   --color-lime: #2d7dff;
   --color-magenta: #2d7dff;
   --color-pink: #ff2d45;
   --color-cyan: #ff2d45;
-  --color-violet: #ffd60a;
-  --color-error: #ff4d6d;
+  --color-violet: #ff2d45;
+  --color-error: #ff2d45;
 
   /* legacy aliases (kept so old utility classes still resolve) */
   --color-paper: #0a1428;

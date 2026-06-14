@@ -109,8 +109,8 @@ export function Hero() {
             <MagneticButton href="/work" className="btn btn-primary">
               Explore Work <span aria-hidden>→</span>
             </MagneticButton>
-            <MagneticButton href="/resume" className="btn btn-ghost">
-              View Résumé
+            <MagneticButton href="/contact" className="btn btn-ghost">
+              Get in Touch
             </MagneticButton>
           </div>
         </div>

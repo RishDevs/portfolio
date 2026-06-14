@@ -10,7 +10,6 @@ export const site = {
   github: "https://github.com/RishDevs",
   githubUser: "RishDevs",
   linkedin: "https://www.linkedin.com/in/rishi-kolluru/",
-  resumePath: "/Rishi_Kolluru_Resume.pdf",
 } as const
 
 export const nav = [
@@ -19,7 +18,6 @@ export const nav = [
   { label: "Systems", href: "/systems" },
   { label: "Lab", href: "/lab" },
   { label: "About", href: "/about" },
-  { label: "Resume", href: "/resume" },
   { label: "Contact", href: "/contact" },
 ] as const
 

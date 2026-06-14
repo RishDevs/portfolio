@@ -5,10 +5,8 @@ import { labEntries } from "@/lib/lab"
 import { Reveal, RevealLines } from "@/components/Reveal"
 
 const STATUS_COLOR: Record<string, string> = {
-  shipped: "var(--color-green)",
-  testing: "var(--color-cyan)",
-  learning: "var(--color-violet)",
-  failed: "var(--color-error)",
+  shipped: "var(--color-blue)",
+  testing: "var(--color-red)",
 }
 
 export function LabPreview() {

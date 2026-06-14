@@ -3,7 +3,7 @@ export type LabEntry = {
   title: string
   date: string
   category: string
-  status: "shipped" | "testing" | "failed" | "learning"
+  status: "shipped" | "testing"
   metric: string
   insight: string
 }
@@ -41,7 +41,7 @@ export const labEntries: LabEntry[] = [
     title: "Why Retrieval Evaluation Needs More Than Recall@1",
     date: "2026-01",
     category: "ML Evaluation",
-    status: "learning",
+    status: "shipped",
     metric: "mAP adds 30% more signal vs Recall@1 alone",
     insight: "Recall@1 misses ranking quality. mAP and MRR surface whether the right result is first or fifth.",
   },

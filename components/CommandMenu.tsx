@@ -34,7 +34,6 @@ export function CommandMenu() {
       { label: "Systems", group: "Navigate", run: go("/systems") },
       { label: "Lab", group: "Navigate", run: go("/lab") },
       { label: "About", group: "Navigate", run: go("/about") },
-      { label: "Resume", group: "Navigate", run: go("/resume") },
       { label: "Contact", group: "Navigate", run: go("/contact") },
       {
         label: "Multilingual Retrieval Engine",
@@ -65,11 +64,6 @@ export function CommandMenu() {
         hint: "/rishi-kolluru",
         group: "Links",
         run: ext(site.linkedin),
-      },
-      {
-        label: "Download Résumé",
-        group: "Links",
-        run: ext(site.resumePath),
       },
       {
         label: "Email Rishi",

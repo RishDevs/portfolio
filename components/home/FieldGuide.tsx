@@ -21,9 +21,9 @@ const MODES = [
   {
     no: "03",
     mode: "Career Mode",
-    desc: "Timeline, experience, skills by capability, and a recruiter-ready profile.",
-    page: "Résumé",
-    href: "/resume",
+    desc: "Timeline, education, experience, and skills grouped by system capability.",
+    page: "About",
+    href: "/about",
   },
 ]
 

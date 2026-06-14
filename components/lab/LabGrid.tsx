@@ -5,13 +5,11 @@ import { labEntries } from "@/lib/lab"
 import { Reveal } from "@/components/Reveal"
 
 const STATUS_COLOR: Record<string, string> = {
-  shipped: "var(--color-green)",
-  testing: "var(--color-cyan)",
-  learning: "var(--color-violet)",
-  failed: "var(--color-error)",
+  shipped: "var(--color-blue)",
+  testing: "var(--color-red)",
 }
 
-const FILTERS = ["All", "shipped", "testing", "learning"]
+const FILTERS = ["All", "shipped", "testing"]
 
 export function LabGrid() {
   const [filter, setFilter] = useState("All")

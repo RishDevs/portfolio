@@ -71,6 +71,33 @@ const LEARNING = [
   "Representation learning for cross-modal alignment",
 ]
 
+const CAPABILITIES = [
+  {
+    title: "Modeling",
+    items: ["CNNs", "LSTMs", "Transformers", "ViT", "XGBoost", "Contrastive"],
+  },
+  {
+    title: "Retrieval",
+    items: ["FAISS", "pgvector", "Redis", "Recall@K", "mAP", "HNSW / FlatIP"],
+  },
+  {
+    title: "LLM Systems",
+    items: ["RAG", "Multi-agent", "Guardrails", "Evaluation", "Routing"],
+  },
+  {
+    title: "Infrastructure",
+    items: ["FastAPI", "Docker", "CI/CD", "PostgreSQL", "REST APIs", "Prometheus"],
+  },
+  {
+    title: "Evaluation",
+    items: ["F1", "ROC-AUC", "RMSE", "P50/P95", "Cost metrics", "SLA tracking"],
+  },
+  {
+    title: "Languages",
+    items: ["Python", "SQL", "Java", "C", "JavaScript"],
+  },
+]
+
 export default function AboutPage() {
   return (
     <>
@@ -87,7 +114,7 @@ export default function AboutPage() {
             <p className="text-2xl leading-relaxed md:text-3xl">
               I&apos;m Rishi — a CS graduate student who builds the kind of AI
               systems serious teams care about.{" "}
-              <span className="serif-accent text-gradient">
+              <span className="text-gradient">
                 Retrieval, agents, RAG, evaluation.
               </span>{" "}
               I care about systems that actually work: measured, observable, and
@@ -168,6 +195,29 @@ export default function AboutPage() {
           </Reveal>
         </div>
 
+        {/* skills by capability */}
+        <div className="mt-24">
+          <p className="label mb-8">Skills by capability</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {CAPABILITIES.map((c, i) => (
+              <Reveal key={c.title} delay={i * 50}>
+                <div className="card h-full p-7">
+                  <h3 className="font-mono text-sm uppercase tracking-widest text-[var(--color-blue)]">
+                    {c.title}
+                  </h3>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {c.items.map((item) => (
+                      <span key={item} className="chip">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
         {/* operating principles */}
         <div className="mt-24">
           <p className="label mb-8">Operating principles</p>
@@ -185,8 +235,8 @@ export default function AboutPage() {
 
         {/* cta */}
         <div className="mt-24 flex flex-wrap items-center gap-3">
-          <MagneticButton href="/resume" className="btn btn-primary">
-            View Résumé
+          <MagneticButton href="/contact" className="btn btn-primary">
+            Get in Touch
           </MagneticButton>
           <MagneticButton
             href={site.github}

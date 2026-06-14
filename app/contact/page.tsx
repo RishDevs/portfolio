@@ -62,13 +62,6 @@ export default function ContactPage() {
                 >
                   GitHub
                 </MagneticButton>
-                <MagneticButton
-                  href={site.resumePath}
-                  external
-                  className="btn btn-ghost"
-                >
-                  Résumé ↓
-                </MagneticButton>
               </div>
             </div>
           </Reveal>

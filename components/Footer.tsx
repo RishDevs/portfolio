@@ -57,16 +57,6 @@ export function Footer() {
                   </a>
                 </li>
               ))}
-              <li>
-                <a
-                  href={site.resumePath}
-                  download
-                  className="link-underline text-sm text-muted hover:text-text"
-                  data-cursor
-                >
-                  Résumé (PDF) ↓
-                </a>
-              </li>
             </ul>
           </div>
 

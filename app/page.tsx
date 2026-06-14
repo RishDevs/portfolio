@@ -1,23 +1,23 @@
-import { HeroSystem } from "@/components/HeroSystem"
-import { ProofMarquee } from "@/components/ProofMarquee"
-import { FeaturedWorkGrid } from "@/components/FeaturedWorkGrid"
-import { AISystemVisualizer } from "@/components/AISystemVisualizer"
-import { DualModeSection } from "@/components/DualModeSection"
-import { CareerTimeline } from "@/components/CareerTimeline"
-import { LabArchive } from "@/components/LabArchive"
-import { ContactConversion } from "@/components/ContactConversion"
+import { Hero } from "@/components/hero/Hero"
+import { ProofStrip } from "@/components/home/ProofStrip"
+import { FeaturedWork } from "@/components/home/FeaturedWork"
+import { SystemPipeline } from "@/components/home/SystemPipeline"
+import { DualMode } from "@/components/home/DualMode"
+import { Timeline } from "@/components/home/Timeline"
+import { LabPreview } from "@/components/home/LabPreview"
+import { ContactCTA } from "@/components/home/ContactCTA"
 
-export default function HomePage() {
+export default function Home() {
   return (
     <>
-      <HeroSystem />
-      <ProofMarquee />
-      <FeaturedWorkGrid />
-      <AISystemVisualizer />
-      <DualModeSection />
-      <CareerTimeline />
-      <LabArchive />
-      <ContactConversion />
+      <Hero />
+      <ProofStrip />
+      <FeaturedWork />
+      <SystemPipeline />
+      <DualMode />
+      <Timeline />
+      <LabPreview />
+      <ContactCTA />
     </>
   )
 }

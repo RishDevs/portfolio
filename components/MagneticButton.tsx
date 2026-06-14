@@ -1,67 +1,68 @@
 "use client"
 
-import { useRef, useState } from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import Link from "next/link"
+import { useRef, type ReactNode, type MouseEvent } from "react"
 
 type Props = {
-  children: React.ReactNode
-  className?: string
-  onClick?: () => void
+  children: ReactNode
   href?: string
-  variant?: "primary" | "secondary" | "ghost"
+  onClick?: () => void
+  className?: string
+  strength?: number
+  external?: boolean
 }
 
-export function MagneticButton({ children, className, onClick, href, variant = "primary" }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+export function MagneticButton({
+  children,
+  href,
+  onClick,
+  className = "",
+  strength = 0.4,
+  external = false,
+}: Props) {
+  const ref = useRef<HTMLSpanElement>(null)
 
-  function onMouseMove(e: React.MouseEvent) {
+  const onMove = (e: MouseEvent) => {
     const el = ref.current
     if (!el) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const rect = el.getBoundingClientRect()
-    const cx = rect.left + rect.width / 2
-    const cy = rect.top + rect.height / 2
-    const dx = (e.clientX - cx) * 0.25
-    const dy = (e.clientY - cy) * 0.25
-    setPosition({ x: dx, y: dy })
+    const x = e.clientX - (rect.left + rect.width / 2)
+    const y = e.clientY - (rect.top + rect.height / 2)
+    el.style.transform = `translate(${x * strength}px, ${y * strength}px)`
   }
 
-  function onMouseLeave() {
-    setPosition({ x: 0, y: 0 })
+  const onLeave = () => {
+    const el = ref.current
+    if (el) el.style.transform = "translate(0, 0)"
   }
-
-  const baseClass = cn(
-    "relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium text-sm cursor-pointer select-none transition-colors",
-    variant === "primary" && "bg-accent-green text-bg hover:bg-accent-cyan",
-    variant === "secondary" && "border border-border text-text hover:border-accent-cyan hover:text-accent-cyan",
-    variant === "ghost" && "text-muted hover:text-text",
-    className
-  )
 
   const inner = (
-    <motion.div
+    <span
       ref={ref}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 350, damping: 25 }}
-      className={baseClass}
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{ transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)" }}
+      className={className}
     >
       {children}
-    </motion.div>
+    </span>
   )
 
   if (href) {
-    return (
-      <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
-        {inner}
-      </a>
-    )
+    if (external) {
+      return (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {inner}
+        </a>
+      )
+    }
+    return <Link href={href}>{inner}</Link>
   }
 
-  return inner
+  return (
+    <button type="button" onClick={onClick}>
+      {inner}
+    </button>
+  )
 }

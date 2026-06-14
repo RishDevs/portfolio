@@ -64,7 +64,7 @@ export const projects: Project[] = [
     ],
     recruiterTakeaway:
       "This project proves I can build ML systems that combine data engineering, representation learning, vector search, evaluation, and latency-aware retrieval — end to end.",
-    github: "https://github.com/RishDevs",
+    github: "https://github.com/RishDevs/multilingual-multimodal-retrieval-engine",
     status: "Shipped",
   },
   {
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     ],
     recruiterTakeaway:
       "This project shows I can design production multi-agent systems with reliability guarantees — structured output, validation, risk scoring, and observability from day one.",
-    github: "https://github.com/RishDevs",
+    github: "https://github.com/RishDevs/AI-Native-Software-Delivery-Control-Tower",
     status: "Shipped",
   },
   {
@@ -159,7 +159,7 @@ export const projects: Project[] = [
     ],
     recruiterTakeaway:
       "This project proves I can build production AI infrastructure — not just a chatbot. Dynamic routing, cost tracking, RAG, guardrails, and observability are all first-class.",
-    github: "https://github.com/RishDevs",
+    github: "https://github.com/RishDevs/cost-aware-support-copilot",
     status: "Shipped",
   },
 ]
@@ -167,3 +167,52 @@ export const projects: Project[] = [
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug)
 }
+
+/** Additional public repositories — shown as a secondary grid. */
+export type Repo = {
+  name: string
+  title: string
+  description: string
+  stack: string[]
+  href: string
+  year: string
+}
+
+export const repos: Repo[] = [
+  {
+    name: "f1-prediction-2026",
+    title: "F1 2026 Race Prediction",
+    description:
+      "Time-series + gradient-boosted modeling pipeline predicting Formula 1 race outcomes for the 2026 season.",
+    stack: ["Python", "XGBoost", "Pandas", "Feature Eng."],
+    href: "https://github.com/RishDevs/f1-prediction-2026",
+    year: "2026",
+  },
+  {
+    name: "fake-news-detection",
+    title: "Fake News Detection",
+    description:
+      "NLP classification system distinguishing real from fabricated news using classical ML and transformer baselines.",
+    stack: ["Python", "NLP", "scikit-learn", "Transformers"],
+    href: "https://github.com/RishDevs/fake-news-detection",
+    year: "2025",
+  },
+  {
+    name: "Machine-Learning-Playground",
+    title: "Machine Learning Playground",
+    description:
+      "A growing notebook collection of supervised, unsupervised, and deep-learning experiments and reference implementations.",
+    stack: ["Jupyter", "PyTorch", "scikit-learn"],
+    href: "https://github.com/RishDevs/Machine-Learning-Playground",
+    year: "2026",
+  },
+  {
+    name: "neural-networks-in-practice_0",
+    title: "Neural Networks in Practice",
+    description:
+      "Hands-on deep-learning studies — CNNs, training dynamics, and architecture comparisons (VGG/ResNet, OCTMNIST).",
+    stack: ["Jupyter", "PyTorch", "CNNs"],
+    href: "https://github.com/RishDevs/neural-networks-in-practice_0",
+    year: "2026",
+  },
+]

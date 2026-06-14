@@ -2,169 +2,157 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@/lib/utils"
-
-const navLinks = [
-  { href: "/work", label: "Work" },
-  { href: "/systems", label: "Systems" },
-  { href: "/lab", label: "Lab" },
-  { href: "/about", label: "About" },
-  { href: "/resume", label: "Resume" },
-]
+import { useEffect, useState } from "react"
+import { nav, site, socials } from "@/lib/site"
 
 export function Header() {
   const pathname = usePathname()
+  const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   useEffect(() => {
-    setMenuOpen(false)
+    setOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : ""
+  }, [open])
+
+  const openCmd = () => {
+    window.dispatchEvent(new CustomEvent("open-command-menu"))
+  }
 
   return (
     <>
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
+      <header
+        className={`fixed inset-x-0 top-0 z-[80] transition-all duration-500 ${
           scrolled
-            ? "py-4 backdrop-blur-xl border-b"
-            : "py-6"
-        )}
-        style={{
-          background: scrolled ? "rgba(2,10,25,0.85)" : "transparent",
-          borderColor: scrolled ? "#1A2D44" : "transparent",
-        }}
+            ? "border-b border-[var(--color-line)] bg-[rgba(2,10,25,0.72)] backdrop-blur-xl"
+            : "border-b border-transparent"
+        }`}
       >
-        <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="group flex items-center gap-3">
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all group-hover:scale-110"
-              style={{ background: "linear-gradient(135deg, #6DEBFF, #B8FF3D)", color: "#020A19" }}
-            >
-              RK
-            </div>
-            <span className="font-semibold tracking-tight hidden sm:block" style={{ color: "#F5F7FA" }}>
-              Rishi Kolluru
+        <div className="wrap flex h-[68px] items-center justify-between">
+          <Link
+            href="/"
+            className="group flex items-center gap-3"
+            data-cursor
+            aria-label="Rishi Kolluru — home"
+          >
+            <span className="relative grid h-8 w-8 place-items-center">
+              <span className="absolute inset-0 rounded-md border border-[var(--color-line-2)]" />
+              <span className="font-display text-sm font-semibold text-green">
+                R
+              </span>
+            </span>
+            <span className="hidden flex-col leading-none sm:flex">
+              <span className="font-display text-[0.95rem] font-semibold tracking-tight">
+                Rishi Kolluru
+              </span>
+              <span className="label-sm mt-1 text-faint">
+                AI Systems Engineer
+              </span>
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors relative group",
-                  pathname === link.href ? "text-accent-cyan" : "text-muted hover:text-text"
-                )}
-              >
-                {link.label}
-                <span
-                  className="absolute -bottom-1 left-0 h-px w-0 group-hover:w-full transition-all duration-300"
-                  style={{ background: "#6DEBFF" }}
-                />
-              </Link>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <span
-              className="text-xs font-mono px-3 py-1.5 rounded-full border"
-              style={{ color: "#B8FF3D", borderColor: "rgba(184,255,61,0.3)", background: "rgba(184,255,61,0.05)" }}
-            >
-              ⌘K
-            </span>
-            <Link
-              href="/contact"
-              className="text-sm font-medium px-4 py-2 rounded-full transition-all"
-              style={{ background: "#B8FF3D", color: "#020A19" }}
-            >
-              Contact
-            </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <span
-              className={cn("w-6 h-0.5 transition-all", menuOpen && "rotate-45 translate-y-2")}
-              style={{ background: "#F5F7FA" }}
-            />
-            <span
-              className={cn("w-6 h-0.5 transition-all", menuOpen && "opacity-0")}
-              style={{ background: "#F5F7FA" }}
-            />
-            <span
-              className={cn("w-6 h-0.5 transition-all", menuOpen && "-rotate-45 -translate-y-2")}
-              style={{ background: "#F5F7FA" }}
-            />
-          </button>
-        </nav>
-      </motion.header>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
-            className="fixed inset-0 z-[99] flex flex-col pt-24 px-8"
-            style={{ background: "#020A19" }}
-          >
-            <nav className="flex flex-col gap-6">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07, ease: [0.19, 1, 0.22, 1] }}
-                >
-                  <Link
-                    href={link.href}
-                    className="text-3xl font-bold"
-                    style={{ color: pathname === link.href ? "#6DEBFF" : "#F5F7FA" }}
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="mt-8"
-              >
+          <nav className="hidden items-center gap-7 lg:flex">
+            {nav.slice(1).map((item) => {
+              const active =
+                pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href))
+              return (
                 <Link
-                  href="/contact"
-                  className="inline-block text-sm font-medium px-6 py-3 rounded-full"
-                  style={{ background: "#B8FF3D", color: "#020A19" }}
+                  key={item.href}
+                  href={item.href}
+                  data-cursor
+                  className={`label-sm transition-colors hover:text-text ${
+                    active ? "text-green" : "text-muted"
+                  }`}
                 >
-                  Let&apos;s Talk
+                  {item.label}
                 </Link>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              )
+            })}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={openCmd}
+              data-cursor
+              className="hidden items-center gap-2 rounded-full border border-[var(--color-line)] px-3 py-1.5 text-muted transition-colors hover:border-[var(--color-line-2)] hover:text-text md:flex"
+              aria-label="Open command menu"
+            >
+              <span className="label-sm">Menu</span>
+              <kbd className="font-mono text-[0.65rem] text-faint">⌘K</kbd>
+            </button>
+
+            <button
+              onClick={() => setOpen((o) => !o)}
+              data-cursor
+              className="relative grid h-10 w-10 place-items-center lg:hidden"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+            >
+              <span
+                className={`absolute h-px w-5 bg-text transition-all duration-300 ${
+                  open ? "rotate-45" : "-translate-y-1.5"
+                }`}
+              />
+              <span
+                className={`absolute h-px w-5 bg-text transition-all duration-300 ${
+                  open ? "-rotate-45" : "translate-y-1.5"
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* mobile / full menu */}
+      <div
+        className={`fixed inset-0 z-[79] flex flex-col bg-[var(--color-bg)] transition-all duration-500 lg:hidden ${
+          open
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      >
+        <div className="wrap flex flex-1 flex-col justify-center gap-1 pt-20">
+          {nav.map((item, i) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="group flex items-baseline gap-4 border-b border-[var(--color-line)] py-4"
+            >
+              <span className="label-sm text-faint">
+                0{i + 1}
+              </span>
+              <span className="display-lg transition-colors group-hover:text-green">
+                {item.label}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="wrap flex flex-wrap gap-x-6 gap-y-2 pb-10">
+          {socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="label-sm text-muted hover:text-text"
+            >
+              {s.label} ↗
+            </a>
+          ))}
+          <span className="label-sm text-faint">{site.email}</span>
+        </div>
+      </div>
     </>
   )
 }

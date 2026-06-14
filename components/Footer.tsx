@@ -1,126 +1,122 @@
 "use client"
 
 import Link from "next/link"
-
-const links = {
-  work: [
-    { label: "Retrieval Engine", href: "/work/multilingual-multimodal-retrieval" },
-    { label: "Agent Platform", href: "/work/ai-software-delivery-control-tower" },
-    { label: "LLM Copilot", href: "/work/cost-aware-llm-support-copilot" },
-  ],
-  pages: [
-    { label: "Systems", href: "/systems" },
-    { label: "Lab", href: "/lab" },
-    { label: "About", href: "/about" },
-    { label: "Resume", href: "/resume" },
-  ],
-  connect: [
-    { label: "GitHub", href: "https://github.com/RishDevs" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/rishi-kolluru" },
-    { label: "Email", href: "mailto:rishikolluru.work@gmail.com" },
-  ],
-}
+import { nav, site, socials } from "@/lib/site"
+import { MagneticButton } from "@/components/MagneticButton"
 
 export function Footer() {
+  const year = new Date().getFullYear()
   return (
-    <footer
-      className="border-t mt-32"
-      style={{ borderColor: "#1A2D44", background: "#020A19" }}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          {/* Identity */}
-          <div className="md:col-span-1">
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold mb-4"
-              style={{ background: "linear-gradient(135deg, #6DEBFF, #B8FF3D)", color: "#020A19" }}
-            >
-              RK
-            </div>
-            <p className="font-bold text-lg mb-2" style={{ color: "#F5F7FA" }}>Rishi Kolluru</p>
-            <p className="text-sm leading-relaxed" style={{ color: "#A7B0C0" }}>
-              Building AI systems that retrieve, reason, route, and ship.
-            </p>
-            <p className="mt-4 text-xs font-mono" style={{ color: "#6DEBFF" }}>
-              MS CSE · University at Buffalo
-            </p>
-          </div>
+    <footer className="relative overflow-hidden border-t border-[var(--color-line)] bg-[var(--color-surface)]">
+      <div className="wrap pt-20 pb-10">
+        <p className="label mb-8">Let&apos;s build</p>
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="display-xl max-w-[14ch]">
+            Building reliable AI systems is the work I want to do.
+          </h2>
+          <MagneticButton
+            href={`mailto:${site.email}`}
+            external
+            className="btn btn-primary shrink-0"
+          >
+            Email Me <span aria-hidden>↗</span>
+          </MagneticButton>
+        </div>
 
-          {/* Work */}
+        <div className="mt-20 grid grid-cols-1 gap-10 border-t border-[var(--color-line)] pt-10 sm:grid-cols-2 md:grid-cols-4">
           <div>
-            <p className="text-label mb-4">Work</p>
-            <ul className="space-y-2">
-              {links.work.map((l) => (
-                <li key={l.href}>
+            <p className="label-sm mb-4 text-faint">Sitemap</p>
+            <ul className="flex flex-col gap-2">
+              {nav.map((n) => (
+                <li key={n.href}>
                   <Link
-                    href={l.href}
-                    className="text-sm transition-colors"
-                    style={{ color: "#A7B0C0" }}
-                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F5F7FA")}
-                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#A7B0C0")}
+                    href={n.href}
+                    className="link-underline text-sm text-muted hover:text-text"
+                    data-cursor
                   >
-                    {l.label}
+                    {n.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Pages */}
           <div>
-            <p className="text-label mb-4">Pages</p>
-            <ul className="space-y-2">
-              {links.pages.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-sm transition-colors"
-                    style={{ color: "#A7B0C0" }}
-                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F5F7FA")}
-                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#A7B0C0")}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Connect */}
-          <div>
-            <p className="text-label mb-4">Connect</p>
-            <ul className="space-y-2">
-              {links.connect.map((l) => (
-                <li key={l.href}>
+            <p className="label-sm mb-4 text-faint">Channels</p>
+            <ul className="flex flex-col gap-2">
+              {socials.map((s) => (
+                <li key={s.label}>
                   <a
-                    href={l.href}
-                    target={l.href.startsWith("http") ? "_blank" : undefined}
+                    href={s.href}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm transition-colors"
-                    style={{ color: "#A7B0C0" }}
-                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#6DEBFF")}
-                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#A7B0C0")}
+                    className="link-underline text-sm text-muted hover:text-text"
+                    data-cursor
                   >
-                    {l.label} ↗
+                    {s.label} ↗
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href={site.resumePath}
+                  download
+                  className="link-underline text-sm text-muted hover:text-text"
+                  data-cursor
+                >
+                  Résumé (PDF) ↓
+                </a>
+              </li>
             </ul>
+          </div>
+
+          <div>
+            <p className="label-sm mb-4 text-faint">Now</p>
+            <p className="max-w-[28ch] text-sm text-muted">
+              MS Computer Science @ University at Buffalo. Open to AI/ML
+              internships & research-engineering roles.
+            </p>
+          </div>
+
+          <div>
+            <p className="label-sm mb-4 text-faint">Direct</p>
+            <a
+              href={`mailto:${site.email}`}
+              className="block break-words text-sm text-muted hover:text-text"
+              data-cursor
+            >
+              {site.email}
+            </a>
+            <p className="mt-1 text-sm text-faint">{site.location}</p>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-8 border-t"
-          style={{ borderColor: "#1A2D44" }}
-        >
-          <p className="text-xs font-mono" style={{ color: "#A7B0C0" }}>
-            © 2026 Rishi Kolluru. Built with Next.js, Three.js, Framer Motion.
+        <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-[var(--color-line)] pt-6 text-xs text-faint sm:flex-row sm:items-center">
+          <p className="font-mono">© {year} Rishi Kolluru</p>
+          <p className="font-mono">
+            Designed & built with Next.js · Three.js · GSAP
           </p>
-          <p className="text-xs font-mono" style={{ color: "#A7B0C0" }}>
-            <span style={{ color: "#B8FF3D" }}>⌘K</span> to open command menu
-          </p>
+          <button
+            onClick={() => {
+              const l = (window as unknown as { lenis?: { scrollTo: (n: number) => void } }).lenis
+              if (l) l.scrollTo(0)
+              else window.scrollTo({ top: 0, behavior: "smooth" })
+            }}
+            className="link-underline font-mono text-xs text-muted hover:text-text"
+            data-cursor
+          >
+            Back to top ↑
+          </button>
         </div>
+      </div>
+
+      {/* oversized watermark */}
+      <div
+        className="pointer-events-none select-none px-4 text-center font-display font-bold leading-none text-[var(--color-surface-2)]"
+        style={{ fontSize: "clamp(4rem, 19vw, 18rem)", letterSpacing: "-0.05em" }}
+        aria-hidden
+      >
+        RISHI
       </div>
     </footer>
   )

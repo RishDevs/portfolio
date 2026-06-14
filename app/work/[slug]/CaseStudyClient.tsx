@@ -1,235 +1,265 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 import type { Project } from "@/lib/projects"
+import { Reveal } from "@/components/Reveal"
+import { MagneticButton } from "@/components/MagneticButton"
 
-export function CaseStudyClient({ project, next }: { project: Project; next: Project }) {
+const SECTIONS = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "architecture", label: "Architecture" },
+  { id: "evaluation", label: "Evaluation" },
+  { id: "failures", label: "Failure modes" },
+  { id: "improved", label: "What improved" },
+  { id: "takeaway", label: "Takeaway" },
+]
+
+export function CaseStudyClient({
+  project,
+  next,
+}: {
+  project: Project
+  next: Project
+}) {
+  const [progress, setProgress] = useState(0)
+  const [activeSection, setActiveSection] = useState("overview")
+  const articleRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = articleRef.current
+      if (!el) return
+      const total = el.scrollHeight - window.innerHeight
+      const scrolled = Math.min(Math.max(-el.getBoundingClientRect().top, 0), total)
+      setProgress(total > 0 ? scrolled / total : 0)
+
+      for (const s of [...SECTIONS].reverse()) {
+        const node = document.getElementById(s.id)
+        if (node && node.getBoundingClientRect().top < window.innerHeight * 0.4) {
+          setActiveSection(s.id)
+          break
+        }
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
   return (
-    <div className="min-h-screen pt-24" style={{ background: "#020A19" }}>
-      {/* Hero */}
-      <section
-        className="relative py-20 px-6 border-b"
-        style={{ borderColor: "#1A2D44", background: "#07111F" }}
+    <article ref={articleRef}>
+      {/* progress bar */}
+      <div className="fixed inset-x-0 top-0 z-[70] h-0.5 bg-transparent">
+        <div
+          className="h-full bg-green"
+          style={{ transform: `scaleX(${progress})`, transformOrigin: "left" }}
+        />
+      </div>
+
+      {/* HERO */}
+      <header
+        id="overview"
+        className="relative overflow-hidden border-b border-[var(--color-line)]"
       >
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0 -z-10 opacity-60"
           style={{
             background:
-              "radial-gradient(ellipse at 20% 50%, rgba(109,235,255,0.05) 0%, transparent 60%)",
+              "radial-gradient(80% 80% at 80% 0%, rgba(109,235,255,0.18), transparent 60%), radial-gradient(70% 70% at 0% 100%, rgba(140,108,255,0.16), transparent 60%)",
           }}
         />
-        <div className="max-w-5xl mx-auto relative">
-          <div className="flex items-center gap-3 mb-6">
-            <Link href="/work" className="text-sm font-mono transition-colors" style={{ color: "#A7B0C0" }}>
+        <div className="wrap pt-36 pb-16 md:pt-44">
+          <div className="flex items-center gap-4">
+            <Link
+              href="/work"
+              className="link-underline font-mono text-xs uppercase tracking-widest text-muted hover:text-text"
+              data-cursor
+            >
               ← Work
             </Link>
-            <span style={{ color: "#1A2D44" }}>/</span>
-            <span className="text-sm font-mono" style={{ color: "#6DEBFF" }}>
-              {project.number}
+            <span className="font-mono text-xs text-faint">/ {project.number}</span>
+            <span className="chip border-[var(--color-line-2)] text-green">
+              {project.status}
             </span>
           </div>
+          <h1 className="display-hero mt-10 max-w-[15ch]">{project.title}</h1>
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+            {project.description}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-2">
+            {project.stack.map((s) => (
+              <span key={s} className="chip">
+                {s}
+              </span>
+            ))}
+          </div>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <MagneticButton href={project.github} external className="btn btn-primary">
+              View on GitHub <span aria-hidden>↗</span>
+            </MagneticButton>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-            className="text-3xl md:text-5xl font-bold mb-4 leading-tight"
-            style={{ color: "#F5F7FA" }}
-          >
-            {project.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg mb-8"
-            style={{ color: "#A7B0C0" }}
-          >
-            {project.tagline}
-          </motion.p>
-
-          {/* Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {/* metric strip */}
+          <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-line)] md:grid-cols-4">
             {project.evaluation.map((m) => (
-              <div key={m.label} className="metric-card">
-                <p className="text-xs font-mono mb-1" style={{ color: "#A7B0C0" }}>
-                  {m.label}
-                </p>
-                <p className="text-2xl font-bold" style={{ color: "#6DEBFF" }}>
-                  {m.value}
-                </p>
+              <div key={m.label} className="bg-[var(--color-surface)] p-6">
+                <p className="display-lg text-gradient">{m.value}</p>
+                <p className="label-sm mt-2 text-faint">{m.label}</p>
               </div>
             ))}
           </div>
+        </div>
+      </header>
 
-          {/* Stack + Links */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap gap-2">
-              {project.stack.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs px-3 py-1 rounded-full font-mono"
-                  style={{ color: "#A7B0C0", background: "#0D1A2E", border: "1px solid #1A2D44" }}
-                >
-                  {tech}
-                </span>
+      {/* BODY with sticky sidebar */}
+      <div className="wrap grid gap-12 py-20 lg:grid-cols-[200px_1fr]">
+        <aside className="hidden lg:block">
+          <div className="sticky top-28">
+            <p className="label-sm mb-5 text-faint">Contents</p>
+            <ul className="flex flex-col gap-3">
+              {SECTIONS.map((s) => (
+                <li key={s.id}>
+                  <a
+                    href={`#${s.id}`}
+                    className={`font-mono text-xs transition-colors ${
+                      activeSection === s.id
+                        ? "text-green"
+                        : "text-muted hover:text-text"
+                    }`}
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        <div className="max-w-3xl">
+          {/* PROBLEM */}
+          <section id="problem" className="scroll-mt-28">
+            <p className="label mb-6">Problem</p>
+            <p className="text-2xl leading-relaxed text-text md:text-3xl">
+              {project.problem}
+            </p>
+            <p className="mt-8 text-lg leading-relaxed text-muted">
+              <span className="text-green">Why it matters — </span>
+              {project.whyItMatters}
+            </p>
+          </section>
+
+          {/* ARCHITECTURE */}
+          <section id="architecture" className="mt-24 scroll-mt-28">
+            <p className="label mb-8">Architecture</p>
+            <div className="flex flex-col gap-2">
+              {project.architecture.map((step, i) => (
+                <Reveal key={i} delay={i * 40}>
+                  <div className="group flex items-center gap-4">
+                    <div className="card flex w-full items-center gap-4 px-5 py-4 transition-colors group-hover:border-[var(--color-line-2)]">
+                      <span className="font-mono text-xs text-faint">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-mono text-sm text-text md:text-base">
+                        {step}
+                      </span>
+                    </div>
+                  </div>
+                  {i < project.architecture.length - 1 && (
+                    <div className="ml-8 h-5 w-px bg-[var(--color-line-2)]" />
+                  )}
+                </Reveal>
               ))}
             </div>
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105"
-              style={{ background: "#B8FF3D", color: "#020A19" }}
-            >
-              GitHub ↗
-            </a>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Main content */}
-      <div className="max-w-5xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Sidebar */}
-          <aside className="lg:col-span-1 lg:sticky lg:top-28 h-fit space-y-6">
-            <div className="rounded-xl p-5" style={{ background: "#07111F", border: "1px solid #1A2D44" }}>
-              <p className="text-label mb-4">Status</p>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{ background: "#B8FF3D" }} />
-                <span className="text-sm font-mono" style={{ color: "#B8FF3D" }}>{project.status}</span>
-              </div>
+          {/* EVALUATION */}
+          <section id="evaluation" className="mt-24 scroll-mt-28">
+            <p className="label mb-8">Evaluation</p>
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2">
+              {project.evaluation.map((m) => (
+                <div key={m.label} className="bg-[var(--color-surface)] p-6">
+                  <p className="label-sm text-faint">{m.label}</p>
+                  <p className="display-lg mt-2">{m.value}</p>
+                </div>
+              ))}
             </div>
+          </section>
 
-            <div className="rounded-xl p-5" style={{ background: "#07111F", border: "1px solid #1A2D44" }}>
-              <p className="text-label mb-4">Categories</p>
-              <div className="flex flex-wrap gap-2">
-                {project.categories.map((c) => (
-                  <span key={c} className="text-xs font-mono px-2 py-1 rounded" style={{ color: "#6DEBFF", background: "rgba(109,235,255,0.1)" }}>
-                    {c}
+          {/* FAILURE MODES */}
+          <section id="failures" className="mt-24 scroll-mt-28">
+            <p className="label mb-8">Failure modes</p>
+            <ul className="flex flex-col gap-4">
+              {project.failureModes.map((f, i) => (
+                <li
+                  key={i}
+                  className="flex gap-4 border-l-2 border-[var(--color-error)] bg-[var(--color-surface)] px-5 py-4 text-muted"
+                >
+                  <span className="font-mono text-xs text-[var(--color-error)]">
+                    !
                   </span>
-                ))}
-              </div>
-            </div>
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </section>
 
-            <div className="rounded-xl p-5" style={{ background: "#07111F", border: "1px solid #1A2D44" }}>
-              <p className="text-label mb-4">Key Metrics</p>
-              <ul className="space-y-2">
-                {project.metrics.map((m) => (
-                  <li key={m} className="flex items-center gap-2 text-sm font-mono" style={{ color: "#B8FF3D" }}>
-                    <span style={{ color: "#1A2D44" }}>→</span> {m}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
+          {/* IMPROVED */}
+          <section id="improved" className="mt-24 scroll-mt-28">
+            <p className="label mb-8">What I improved</p>
+            <ul className="flex flex-col gap-4">
+              {project.improvements.map((f, i) => (
+                <li
+                  key={i}
+                  className="flex gap-4 border-l-2 border-green bg-[var(--color-surface)] px-5 py-4 text-muted"
+                >
+                  <span className="font-mono text-xs text-green">↑</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </section>
 
-          {/* Body */}
-          <div className="lg:col-span-2 space-y-12">
-            {/* Problem */}
-            <Section title="Problem">
-              <p className="text-base leading-relaxed" style={{ color: "#A7B0C0" }}>
-                {project.problem}
+          {/* TAKEAWAY */}
+          <section id="takeaway" className="mt-24 scroll-mt-28">
+            <div className="card relative overflow-hidden p-8 md:p-12">
+              <div
+                className="pointer-events-none absolute inset-0 opacity-50"
+                style={{
+                  background:
+                    "radial-gradient(70% 70% at 100% 0%, rgba(184,255,61,0.12), transparent 60%)",
+                }}
+              />
+              <p className="label relative mb-6 text-green">
+                What this proves
               </p>
-            </Section>
-
-            {/* Why it matters */}
-            <Section title="Why It Matters">
-              <p className="text-base leading-relaxed" style={{ color: "#A7B0C0" }}>
-                {project.whyItMatters}
-              </p>
-            </Section>
-
-            {/* Architecture */}
-            <Section title="Architecture">
-              <div className="flex flex-col gap-1">
-                {project.architecture.map((step, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div
-                      className="rounded-xl px-4 py-3 text-sm font-mono flex-1"
-                      style={{ background: "#07111F", border: "1px solid #1A2D44", color: "#F5F7FA" }}
-                    >
-                      {step}
-                    </div>
-                    {i < project.architecture.length - 1 && (
-                      <span className="text-sm" style={{ color: "#1A2D44" }}>↓</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            {/* Failure Modes */}
-            <Section title="Failure Modes">
-              <ul className="space-y-3">
-                {project.failureModes.map((f, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: "#A7B0C0" }}>
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#FF5C7A" }} />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </Section>
-
-            {/* What I Improved */}
-            <Section title="What I Improved">
-              <ul className="space-y-3">
-                {project.improvements.map((imp, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: "#A7B0C0" }}>
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#B8FF3D" }} />
-                    {imp}
-                  </li>
-                ))}
-              </ul>
-            </Section>
-
-            {/* Recruiter Takeaway */}
-            <div
-              className="rounded-2xl p-8"
-              style={{
-                background: "linear-gradient(135deg, rgba(109,235,255,0.05), rgba(140,108,255,0.05))",
-                border: "1px solid rgba(109,235,255,0.2)",
-              }}
-            >
-              <p className="text-label mb-3" style={{ color: "#6DEBFF" }}>Recruiter Takeaway</p>
-              <p className="text-base leading-relaxed" style={{ color: "#F5F7FA" }}>
+              <p className="relative text-2xl leading-relaxed md:text-3xl">
                 {project.recruiterTakeaway}
               </p>
             </div>
-          </div>
-        </div>
-
-        {/* Next Project */}
-        <div className="mt-24 pt-12 border-t" style={{ borderColor: "#1A2D44" }}>
-          <p className="text-label mb-4">Next Project</p>
-          <Link
-            href={`/work/${next.slug}`}
-            className="group flex items-center justify-between p-6 rounded-2xl transition-all hover:-translate-y-1"
-            style={{ background: "#07111F", border: "1px solid #1A2D44" }}
-          >
-            <div>
-              <p className="text-xs font-mono mb-1" style={{ color: "#A7B0C0" }}>{next.number}</p>
-              <h3 className="font-bold transition-colors group-hover:text-accent-cyan" style={{ color: "#F5F7FA" }}>
-                {next.title}
-              </h3>
-              <p className="text-sm mt-1" style={{ color: "#A7B0C0" }}>{next.mainMetric}</p>
-            </div>
-            <span className="text-2xl transition-transform group-hover:translate-x-2" style={{ color: "#6DEBFF" }}>
-              →
-            </span>
-          </Link>
+          </section>
         </div>
       </div>
-    </div>
-  )
-}
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <p className="text-label mb-4">{title}</p>
-      {children}
-    </div>
+      {/* NEXT */}
+      <Link
+        href={`/work/${next.slug}`}
+        data-cursor
+        className="group block border-t border-[var(--color-line)] py-20 transition-colors hover:bg-[var(--color-surface)]"
+      >
+        <div className="wrap">
+          <p className="label mb-5 text-faint">Next project</p>
+          <div className="flex items-center justify-between gap-6">
+            <h2 className="display-xl max-w-[18ch] transition-colors group-hover:text-green">
+              {next.title}
+            </h2>
+            <span className="text-3xl transition-transform duration-300 group-hover:translate-x-2 md:text-5xl">
+              →
+            </span>
+          </div>
+        </div>
+      </Link>
+    </article>
   )
 }

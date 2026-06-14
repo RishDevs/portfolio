@@ -14,7 +14,18 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(pkill -f \"next dev\")",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(pkill -f \"next-server\")",
+      "WebFetch(domain:github.com)",
+      "Bash(gh api *)",
+      "Bash(grep -E \"^\\(three|gsap|lenis|framer-motion|@react-three|clsx|tailwind-merge\\)$\")",
+      "Bash(curl -s -o /dev/null -w \"home HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"work HTTP %{http_code}\\\\n\" http://localhost:3000/work)",
+      "Bash(curl -s -o /dev/null -w \"case HTTP %{http_code}\\\\n\" http://localhost:3000/work/multilingual-multimodal-retrieval)",
+      "Bash(curl -s -o /dev/null -w \"systems HTTP %{http_code}\\\\n\" http://localhost:3000/systems)",
+      "Bash(curl -s -o /dev/null -w \"resume HTTP %{http_code}\\\\n\" http://localhost:3000/resume)",
+      "Bash(kill 12141)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)"
     ]
   }
 }

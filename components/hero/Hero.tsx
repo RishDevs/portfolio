@@ -48,7 +48,7 @@ export function Hero() {
       <div className="wrap relative z-10 pt-24 md:pt-28">
         <div className="rule" style={{ background: "rgba(244,241,250,0.45)" }} />
         <div className="flex flex-wrap items-center justify-between gap-2 py-3">
-          <span className="spec text-text">RK // AI Systems</span>
+          <span className="spec text-text">RK // AI Research</span>
           <span className="spec flex items-center gap-2 text-[var(--color-magenta)]">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-magenta)]" />
             Status: Online

@@ -26,6 +26,14 @@ export default function ContactPage() {
         label="Let's build"
         titleLines={["Let's", "talk."]}
         blurb="I'm looking for full-time AI/ML roles, research-engineering positions, and teams building real-world intelligent systems. If you're hiring for retrieval, agents, or applied research engineering — let's talk."
+        watermark="HELLO"
+        keywords={[
+          "Full-time",
+          "Research engineering",
+          "Buffalo, NY",
+          "Open to relocate",
+          "Available now",
+        ]}
       />
 
       <section className="wrap pb-32">

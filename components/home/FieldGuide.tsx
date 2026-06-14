@@ -47,7 +47,7 @@ export function FieldGuide() {
             />
             <p className="mt-6 max-w-sm text-muted">
               This isn&apos;t a résumé page — it&apos;s a working journal of an
-              AI systems engineer. Pick a path through it.
+              AI research engineer. Pick a path through it.
             </p>
           </div>
 

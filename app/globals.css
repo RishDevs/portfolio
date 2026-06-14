@@ -417,8 +417,53 @@ html.lenis body {
   }
 }
 
+@keyframes blobFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(7%, -9%) scale(1.18);
+  }
+  66% {
+    transform: translate(-8%, 6%) scale(0.9);
+  }
+}
+@keyframes blobFloat2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.08);
+  }
+  50% {
+    transform: translate(-9%, 8%) scale(0.88);
+  }
+}
+
 .animate-spin-slow {
   animation: spin-slow 18s linear infinite;
+}
+.animate-blob {
+  animation: blobFloat 22s ease-in-out infinite;
+}
+.animate-blob-2 {
+  animation: blobFloat2 18s ease-in-out infinite;
+}
+
+/* faint engineering grid */
+.bg-grid {
+  background-image: linear-gradient(
+      rgba(157, 178, 212, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(157, 178, 212, 0.06) 1px, transparent 1px);
+  background-size: 46px 46px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob,
+  .animate-blob-2 {
+    animation: none !important;
+  }
 }
 
 /* ============================================================

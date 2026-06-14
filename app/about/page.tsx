@@ -104,7 +104,15 @@ export default function AboutPage() {
       <PageIntro
         index="/about"
         label="The person"
-        titleLines={["High-agency", "AI engineer."]}
+        titleLines={["AI research", "engineer."]}
+        watermark="RK"
+        keywords={[
+          "Buffalo, NY",
+          "MS CSE @ UB",
+          "High agency",
+          "Research → production",
+          "Reads papers, ships code",
+        ]}
       />
 
       <section className="wrap pb-24">
@@ -112,13 +120,19 @@ export default function AboutPage() {
         <Reveal>
           <div className="max-w-3xl">
             <p className="text-2xl leading-relaxed md:text-3xl">
-              I&apos;m Rishi — a CS graduate student who builds the kind of AI
-              systems serious teams care about.{" "}
+              I&apos;m Rishi — an AI research engineer who lives in the gap
+              between a paper and a pull request.{" "}
               <span className="text-gradient">
                 Retrieval, agents, RAG, evaluation.
               </span>{" "}
-              I care about systems that actually work: measured, observable, and
-              shipped.
+              I read the research, then I build the system that proves it works —
+              measured, observable, and shipped.
+            </p>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+              Most &ldquo;AI&rdquo; demos fall apart the moment latency, cost, or
+              an adversarial user shows up. I&apos;m interested in the unglamorous
+              90% that makes them survive contact with reality: evaluation
+              harnesses, guardrails, routing, and the metrics nobody screenshots.
             </p>
           </div>
         </Reveal>

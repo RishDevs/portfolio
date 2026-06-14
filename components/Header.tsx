@@ -56,7 +56,7 @@ export function Header() {
                 Rishi Kolluru
               </span>
               <span className="label-sm mt-1 text-faint">
-                AI Systems Engineer
+                AI Research Engineer
               </span>
             </span>
           </Link>

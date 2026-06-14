@@ -85,7 +85,7 @@ export function Preloader() {
         <div className="display-xl text-text">
           Rishi Kolluru
         </div>
-        <div className="label text-muted">AI Systems Engineer</div>
+        <div className="label text-muted">AI Research Engineer</div>
       </div>
 
       <div className="flex items-end justify-between gap-4">

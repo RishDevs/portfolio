@@ -49,9 +49,13 @@ export function WorkIndex() {
             <Link
               href={`/work/${p.slug}`}
               data-cursor
-              className="group grid items-center gap-5 border-b border-[var(--color-line)] py-8 transition-colors hover:bg-[var(--color-surface)]/50 md:grid-cols-[5rem_1fr_auto] md:gap-10 md:px-3"
+              className="group relative grid items-center gap-5 overflow-hidden border-b border-[var(--color-line)] py-8 transition-all duration-500 hover:bg-[var(--color-surface)]/60 hover:pl-4 md:grid-cols-[5rem_1fr_auto] md:gap-10 md:px-3 md:hover:pl-6"
             >
-              <span className="font-mono text-lg text-faint transition-colors group-hover:text-green">
+              <span
+                className="absolute left-0 top-1/2 h-0 w-[3px] -translate-y-1/2 bg-[var(--color-blue)] transition-all duration-500 group-hover:h-3/4"
+                aria-hidden
+              />
+              <span className="font-mono text-lg text-faint transition-colors group-hover:text-[var(--color-blue)]">
                 {p.number}
               </span>
               <div>

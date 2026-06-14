@@ -16,6 +16,14 @@ export default function LabPage() {
         label="Building in public"
         titleLines={["The lab."]}
         blurb="A live archive of experiments, benchmarks, and notes from building AI systems in public. Some shipped, some in testing."
+        watermark="LAB"
+        keywords={[
+          "Experiments",
+          "Benchmarks",
+          "Build logs",
+          "Failures",
+          "Reading notes",
+        ]}
       />
       <LabGrid />
     </>

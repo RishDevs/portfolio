@@ -1,6 +1,6 @@
 export const site = {
   name: "Rishi Kolluru",
-  role: "AI Systems Engineer",
+  role: "AI Research Engineer",
   tagline: "I build AI systems that retrieve, reason, route, and ship.",
   subtitle:
     "MS Computer Science at the University at Buffalo. I work on multimodal retrieval, LLM agents, RAG infrastructure, and production-grade ML systems.",

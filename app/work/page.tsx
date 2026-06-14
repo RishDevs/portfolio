@@ -16,6 +16,15 @@ export default function WorkPage() {
         label="Index of systems"
         titleLines={["Selected", "work."]}
         blurb="Projects shown as systems, not résumé bullets — each with architecture, evaluation metrics, and a recruiter takeaway."
+        watermark="WORK"
+        keywords={[
+          "Retrieval",
+          "LLM Systems",
+          "Agents",
+          "Deep Learning",
+          "Infrastructure",
+          "Evaluation",
+        ]}
       />
       <WorkIndex />
     </>

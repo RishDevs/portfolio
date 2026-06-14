@@ -41,7 +41,7 @@ export function LabGrid() {
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {entries.map((e, i) => (
           <Reveal key={e.id} delay={i * 50}>
-            <article className="card group flex h-full flex-col p-7 transition-colors hover:border-[var(--color-line-2)]">
+            <article className="card group flex h-full flex-col p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-[var(--color-blue)]/50 hover:shadow-[0_18px_60px_-26px_rgba(45,125,255,0.6)]">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-faint">{e.date}</span>
                 <span

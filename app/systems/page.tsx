@@ -77,13 +77,22 @@ export default function SystemsPage() {
         label="Systems thinking"
         titleLines={["I think in", "systems."]}
         blurb="My work sits at the intersection of ML modeling and software systems — data pipelines, embeddings, vector search, routing logic, evaluation, APIs, and deployment."
+        watermark="SYS"
+        keywords={[
+          "Retrieval",
+          "Agentic",
+          "RAG infra",
+          "Evaluation",
+          "Deployment",
+          "Observability",
+        ]}
       />
 
       <section className="wrap pb-32">
         <div className="flex flex-col gap-6">
           {SYSTEMS.map((s, i) => (
             <Reveal key={s.n} delay={i * 60}>
-              <div className="card grid gap-8 p-8 md:grid-cols-[1fr_1.1fr] md:p-12">
+              <div className="card group grid gap-8 p-8 transition-all duration-500 hover:border-[var(--color-blue)]/50 hover:shadow-[0_0_70px_-24px_rgba(45,125,255,0.55)] md:grid-cols-[1fr_1.1fr] md:p-12">
                 <div>
                   <div className="flex items-center gap-4">
                     <span className="font-mono text-sm text-faint">{s.n}</span>
@@ -107,11 +116,11 @@ export default function SystemsPage() {
                   <div className="flex flex-wrap items-center gap-2">
                     {s.flow.map((node, j) => (
                       <span key={node} className="flex items-center gap-2">
-                        <span className="rounded-full border border-[var(--color-line-2)] px-3 py-1.5 font-mono text-xs text-muted">
+                        <span className="rounded-full border border-[var(--color-line-2)] px-3 py-1.5 font-mono text-xs text-muted transition-colors duration-300 group-hover:border-[var(--color-blue)]/40 group-hover:text-text">
                           {node}
                         </span>
                         {j < s.flow.length - 1 && (
-                          <span className="text-[var(--color-line-2)]">→</span>
+                          <span className="text-[var(--color-red)]">→</span>
                         )}
                       </span>
                     ))}

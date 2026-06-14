@@ -35,7 +35,7 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL("https://rishikolluru.com"),
   title: {
-    default: "Rishi Kolluru — AI Systems · Retrieval · Agents",
+    default: "Rishi Kolluru — AI Research Engineer",
     template: "%s — Rishi Kolluru",
   },
   description: site.subtitle,
@@ -51,14 +51,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name, url: site.github }],
   openGraph: {
-    title: "Rishi Kolluru — AI Systems · Retrieval · Agents",
+    title: "Rishi Kolluru — AI Research Engineer",
     description: site.tagline,
     type: "website",
     siteName: "Rishi Kolluru",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rishi Kolluru — AI Systems Engineer",
+    title: "Rishi Kolluru — AI Research Engineer",
     description: site.tagline,
   },
 }

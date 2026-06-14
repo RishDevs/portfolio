@@ -46,15 +46,18 @@ export function Hero() {
 
       {/* MASTHEAD */}
       <div className="wrap relative z-10 pt-24 md:pt-28">
-        <div className="rule" style={{ background: "rgba(245,247,250,0.5)" }} />
+        <div className="rule" style={{ background: "rgba(244,241,250,0.45)" }} />
         <div className="flex flex-wrap items-center justify-between gap-2 py-3">
-          <span className="spec text-text">RK — AI Systems Journal</span>
-          <span className="spec text-muted">Vol. 2026 / No. 01</span>
+          <span className="spec text-text">RK // AI Systems</span>
+          <span className="spec flex items-center gap-2 text-[var(--color-magenta)]">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-magenta)]" />
+            Status: Online
+          </span>
           <span className="spec hidden text-muted sm:inline">
             {site.location} · MS CSE
           </span>
         </div>
-        <div className="rule-faint" style={{ background: "rgba(245,247,250,0.18)" }} />
+        <div className="rule-faint" style={{ background: "rgba(244,241,250,0.16)" }} />
       </div>
 
       {/* HEADLINE */}
@@ -83,9 +86,7 @@ export function Hero() {
               >
                 {line[0]}{" "}
                 {i === 1 || i === 2 ? (
-                  <span className="serif-accent text-[var(--color-lime)]">
-                    {line[1]}
-                  </span>
+                  <span className="text-gradient">{line[1]}</span>
                 ) : (
                   line[1]
                 )}

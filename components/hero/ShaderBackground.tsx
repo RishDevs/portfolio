@@ -86,19 +86,19 @@ const fragment = /* glsl */ `
     float glow = smoothstep(0.55, 0.0, d) * 0.5;
     f += glow * (0.6 + 0.4 * sin(uTime * 0.6));
 
-    // palette — new-gen flash: near-black with acid lime + vermillion
-    vec3 base       = vec3(0.027, 0.024, 0.031); // #07060A warm near-black
-    vec3 deep       = vec3(0.094, 0.043, 0.063); // #18100F deep maroon
-    vec3 vermillion = vec3(0.898, 0.325, 0.239); // #E5533D
-    vec3 lime       = vec3(0.776, 0.949, 0.306);  // #C6F24E
-    vec3 violet     = vec3(0.549, 0.424, 1.0);    // #8C6CFF
+    // palette — electric flash: near-black plum with magenta + violet
+    vec3 base    = vec3(0.027, 0.020, 0.059); // #07050F
+    vec3 deep    = vec3(0.102, 0.039, 0.180); // #1A0A2E deep purple
+    vec3 magenta = vec3(1.000, 0.176, 0.612);  // #FF2D9C
+    vec3 violet  = vec3(0.541, 0.357, 1.000);  // #8A5BFF
+    vec3 pink    = vec3(1.000, 0.365, 0.694);  // #FF5DB1
 
     vec3 col = mix(base, deep, smoothstep(-0.6, 0.6, f));
-    col = mix(col, vermillion * 0.55, smoothstep(0.1, 0.75, f) * 0.75);
-    col = mix(col, violet * 0.32, smoothstep(0.3, 0.95, length(r)) * 0.4);
-    col += lime * smoothstep(0.78, 1.05, f) * 0.6;
-    col += lime * glow * 0.4;
-    col += vermillion * glow * 0.15;
+    col = mix(col, magenta * 0.6, smoothstep(0.1, 0.78, f) * 0.78);
+    col = mix(col, violet * 0.5, smoothstep(0.3, 0.95, length(r)) * 0.5);
+    col += pink * smoothstep(0.8, 1.05, f) * 0.55;
+    col += magenta * glow * 0.45;
+    col += violet * glow * 0.2;
 
     // vignette
     float vig = smoothstep(1.25, 0.25, length((uv - 0.5) * vec2(uAspect, 1.0)));

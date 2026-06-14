@@ -1,105 +1,124 @@
 "use client"
 
 import Link from "next/link"
+import { useRef } from "react"
 import { projects } from "@/lib/projects"
-import { Reveal } from "@/components/Reveal"
-import { Scramble } from "@/components/Scramble"
+import { Reveal, RevealLines } from "@/components/Reveal"
 
 const GRADIENTS = [
-  "radial-gradient(120% 120% at 20% 20%, #6debff, transparent 55%), radial-gradient(120% 120% at 85% 80%, #8c6cff, transparent 55%), #07060a",
-  "radial-gradient(120% 120% at 80% 20%, #c6f24e, transparent 55%), radial-gradient(120% 120% at 20% 90%, #e5533d, transparent 60%), #07060a",
-  "radial-gradient(120% 120% at 30% 80%, #8c6cff, transparent 55%), radial-gradient(120% 120% at 80% 10%, #c6f24e, transparent 55%), #07060a",
+  "radial-gradient(120% 120% at 20% 20%, rgba(255,45,156,0.55), transparent 55%), radial-gradient(120% 120% at 85% 80%, rgba(138,91,255,0.5), transparent 55%)",
+  "radial-gradient(120% 120% at 80% 20%, rgba(255,93,177,0.5), transparent 55%), radial-gradient(120% 120% at 20% 90%, rgba(176,105,255,0.5), transparent 55%)",
+  "radial-gradient(120% 120% at 30% 80%, rgba(138,91,255,0.55), transparent 55%), radial-gradient(120% 120% at 80% 10%, rgba(255,45,156,0.45), transparent 55%)",
 ]
+
+function Card({ project, index }: { project: (typeof projects)[number]; index: number }) {
+  const ref = useRef<HTMLAnchorElement>(null)
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const r = el.getBoundingClientRect()
+    const rx = ((e.clientY - r.top) / r.height - 0.5) * -5
+    const ry = ((e.clientX - r.left) / r.width - 0.5) * 5
+    el.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg)`
+  }
+  const onLeave = () => {
+    if (ref.current)
+      ref.current.style.transform =
+        "perspective(1200px) rotateX(0) rotateY(0)"
+  }
+
+  return (
+    <Reveal delay={index * 80}>
+      <Link
+        ref={ref}
+        href={`/work/${project.slug}`}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        className="group card relative block overflow-hidden p-7 transition-[transform,border-color] duration-300 will-change-transform hover:border-[var(--color-line-2)] md:p-9"
+        style={{ transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1)" }}
+        data-cursor
+      >
+        <div className="flex items-start justify-between">
+          <span className="font-mono text-sm text-faint">{project.number}</span>
+          <span className="chip border-[var(--color-line-2)] text-green">
+            {project.mainMetric}
+          </span>
+        </div>
+
+        {/* visual preview */}
+        <div
+          className="relative mt-7 aspect-[16/9] w-full overflow-hidden rounded-xl border border-[var(--color-line)]"
+          style={{ background: "#0a0618" }}
+        >
+          <div
+            className="absolute inset-0 opacity-80 transition-transform duration-700 group-hover:scale-110"
+            style={{ backgroundImage: GRADIENTS[index % 3] }}
+          />
+          <div
+            className="absolute inset-0 mix-blend-overlay"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+          <span className="absolute bottom-3 left-4 font-mono text-[0.65rem] uppercase tracking-widest text-text/70">
+            {project.category}
+          </span>
+        </div>
+
+        <h3 className="display-lg mt-7 max-w-[18ch] transition-colors group-hover:text-green">
+          {project.title}
+        </h3>
+        <p className="mt-3 max-w-[48ch] text-sm leading-relaxed text-muted">
+          {project.tagline}
+        </p>
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.stack.slice(0, 4).map((s) => (
+            <span key={s} className="chip">
+              {s}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-7 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted transition-colors group-hover:text-text">
+          Open case study
+          <span className="transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
+        </div>
+      </Link>
+    </Reveal>
+  )
+}
 
 export function FeaturedWork() {
   return (
-    <section className="paper section-pad" id="work">
+    <section className="section-pad relative" id="work">
       <div className="wrap">
-        {/* masthead */}
-        <div className="rule mb-5" />
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+        <div className="mb-14 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="spec text-[var(--color-vermillion)]">
-              § 01 — Selected Works
-            </p>
-            <h2 className="display-serif mt-4 text-[clamp(2.6rem,8vw,7rem)]">
-              Field notes from
-              <br />
-              <span className="italic">building systems.</span>
-            </h2>
+            <p className="label mb-5">/ 01 — Featured Systems</p>
+            <RevealLines
+              className="display-xl max-w-[20ch]"
+              lines={["Selected systems built", "across retrieval, agents", "& LLM infrastructure."]}
+            />
           </div>
           <Link
             href="/work"
-            className="link-underline shrink-0 spec text-ink-soft hover:text-ink"
+            className="link-underline shrink-0 font-mono text-sm uppercase tracking-widest text-muted hover:text-text"
             data-cursor
           >
-            Full index →
+            All work →
           </Link>
         </div>
 
-        {/* catalog rows */}
-        <div className="border-t border-[var(--color-ink)]">
+        <div className="grid gap-6 lg:grid-cols-3">
           {projects.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 70}>
-              <Link
-                href={`/work/${p.slug}`}
-                data-cursor
-                className="group grid grid-cols-1 items-center gap-6 border-b border-[var(--color-rule)] py-8 transition-colors md:grid-cols-[4rem_1.4fr_auto] md:gap-10"
-              >
-                <span className="index-num text-3xl text-ink-faint transition-colors group-hover:text-[var(--color-vermillion)] md:text-4xl">
-                  {p.number}
-                </span>
-
-                <div>
-                  <h3 className="display-lg text-ink transition-all group-hover:translate-x-1">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 max-w-[56ch] text-sm text-ink-soft">
-                    {p.tagline}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {p.stack.slice(0, 5).map((s) => (
-                      <span key={s} className="chip-ink">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-6">
-                  {/* flash preview */}
-                  <div
-                    className="relative hidden h-24 w-40 shrink-0 overflow-hidden rounded-md border border-[var(--color-ink)] lg:block"
-                    style={{ background: GRADIENTS[i % 3] }}
-                  >
-                    <div
-                      className="absolute inset-0 opacity-40"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px)",
-                        backgroundSize: "16px 16px",
-                      }}
-                    />
-                    <span className="absolute bottom-1.5 left-2 font-mono text-[0.55rem] uppercase tracking-widest text-white/80">
-                      {p.category}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <Scramble
-                      text={p.mainMetric}
-                      as="p"
-                      className="font-display text-lg font-medium text-ink"
-                    />
-                    <span className="mt-2 inline-flex items-center gap-1 spec text-ink-soft transition-colors group-hover:text-[var(--color-vermillion)]">
-                      Open
-                      <span className="transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </Reveal>
+            <Card key={p.slug} project={p} index={i} />
           ))}
         </div>
       </div>

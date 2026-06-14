@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Reveal } from "@/components/Reveal"
+import { Reveal, RevealLines } from "@/components/Reveal"
 
 const MODES = [
   {
@@ -29,50 +29,53 @@ const MODES = [
 
 export function FieldGuide() {
   return (
-    <section className="paper section-pad border-t-2 border-[var(--color-ink)]">
-      <div className="wrap">
+    <section className="section-pad relative border-y border-[var(--color-line)] bg-[var(--color-surface)]">
+      <div
+        className="pointer-events-none absolute inset-0 -z-0 opacity-60"
+        style={{
+          background:
+            "radial-gradient(60% 60% at 15% 0%, rgba(255,45,156,0.1), transparent 60%), radial-gradient(60% 60% at 100% 100%, rgba(138,91,255,0.1), transparent 60%)",
+        }}
+      />
+      <div className="wrap relative">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div>
-            <p className="spec text-[var(--color-vermillion)]">
-              § 03 — Field Guide
-            </p>
-            <h2 className="display-serif mt-4 text-[clamp(2.4rem,6vw,5rem)]">
-              Three ways
-              <br />
-              <span className="italic">to read this.</span>
-            </h2>
-            <p className="mt-6 max-w-sm text-ink-soft">
+            <p className="label mb-5 text-[var(--color-magenta)]">/ 04 — Field Guide</p>
+            <RevealLines
+              className="display-xl"
+              lines={["Three ways", "to read this."]}
+            />
+            <p className="mt-6 max-w-sm text-muted">
               This isn&apos;t a résumé page — it&apos;s a working journal of an
               AI systems engineer. Pick a path through it.
             </p>
           </div>
 
-          {/* table of contents */}
-          <div className="border-t border-[var(--color-ink)]">
+          <div className="border-t border-[var(--color-line)]">
             {MODES.map((m, i) => (
               <Reveal key={m.no} delay={i * 80}>
                 <Link
                   href={m.href}
                   data-cursor
-                  className="group flex items-center gap-5 border-b border-[var(--color-rule)] py-7"
+                  className="group flex items-center gap-5 border-b border-[var(--color-line)] py-7 transition-colors hover:bg-[var(--color-surface-2)]/40"
                 >
-                  <span className="index-num text-sm text-ink-faint transition-colors group-hover:text-[var(--color-vermillion)]">
+                  <span className="font-mono text-sm text-faint transition-colors group-hover:text-[var(--color-magenta)]">
                     {m.no}
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-baseline gap-3">
-                      <h3 className="display-lg text-ink transition-transform group-hover:translate-x-1">
+                      <h3 className="display-lg transition-transform group-hover:translate-x-1 group-hover:text-[var(--color-magenta)]">
                         {m.mode}
                       </h3>
                       <span
-                        className="hidden flex-1 self-end border-b border-dotted border-[var(--color-rule)] sm:block"
+                        className="hidden flex-1 self-end border-b border-dotted border-[var(--color-line-2)] sm:block"
                         aria-hidden
                       />
-                      <span className="hidden shrink-0 spec text-ink-soft transition-colors group-hover:text-ink sm:inline">
+                      <span className="hidden shrink-0 font-mono text-xs uppercase tracking-widest text-muted transition-colors group-hover:text-text sm:inline">
                         → {m.page}
                       </span>
                     </div>
-                    <p className="mt-2 max-w-[48ch] text-sm text-ink-soft">
+                    <p className="mt-2 max-w-[48ch] text-sm text-muted">
                       {m.desc}
                     </p>
                   </div>

@@ -18,20 +18,20 @@ const ITEMS: { k: string; v: string }[] = [
 export function ProofStrip() {
   return (
     <section
-      className="paper relative border-y-2 border-[var(--color-ink)] py-4"
+      className="relative border-y border-[var(--color-line)] bg-[var(--color-surface)] py-5"
       aria-label="Key metrics"
     >
-      <Marquee speed={34}>
+      <Marquee speed={32}>
         {ITEMS.map((item, i) => (
           <span
             key={i}
-            className="mx-6 inline-flex items-baseline gap-2 whitespace-nowrap"
+            className="group mx-7 inline-flex items-baseline gap-2 whitespace-nowrap"
           >
-            <span className="font-display text-2xl font-medium text-ink md:text-3xl">
+            <span className="display-lg font-display text-text transition-colors group-hover:text-green">
               {item.k}
             </span>
-            <span className="spec text-ink-soft">{item.v}</span>
-            <span className="mx-4 text-lg text-[var(--color-vermillion)]">✦</span>
+            <span className="label-sm text-faint">{item.v}</span>
+            <span className="mx-5 text-[var(--color-line-2)]">/</span>
           </span>
         ))}
       </Marquee>

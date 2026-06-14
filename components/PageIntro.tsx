@@ -16,16 +16,16 @@ export function PageIntro({
       {/* journal masthead */}
       <div
         className="rule"
-        style={{ background: "rgba(245,247,250,0.5)" }}
+        style={{ background: "rgba(244,241,250,0.45)" }}
       />
       <div className="flex flex-wrap items-center justify-between gap-2 py-3">
-        <span className="spec text-text">RK — AI Systems Journal</span>
+        <span className="spec text-text">RK // AI Systems</span>
         <span className="spec text-muted">{index}</span>
-        <span className="spec hidden text-[var(--color-lime)] sm:inline">
+        <span className="spec hidden text-[var(--color-magenta)] sm:inline">
           {label}
         </span>
       </div>
-      <div className="rule-faint" style={{ background: "rgba(245,247,250,0.16)" }} />
+      <div className="rule-faint" style={{ background: "rgba(244,241,250,0.16)" }} />
 
       <RevealLines
         className="display-hero mt-12 max-w-[16ch]"

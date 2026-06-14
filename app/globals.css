@@ -4,29 +4,32 @@
    DESIGN TOKENS
    ============================================================ */
 @theme {
-  --color-bg: #020a19;
-  --color-bg-2: #03102a;
-  --color-surface: #07111f;
-  --color-surface-2: #0c1726;
-  --color-line: #16263c;
-  --color-line-2: #233650;
-  --color-text: #f5f7fa;
-  --color-muted: #a7b0c0;
-  --color-faint: #5f6b80;
-  --color-green: #c6f24e;
-  --color-lime: #c6f24e;
-  --color-cyan: #6debff;
-  --color-violet: #8c6cff;
-  --color-error: #ff5c7a;
+  --color-bg: #07050f;
+  --color-bg-2: #0e0820;
+  --color-surface: #0d0a1a;
+  --color-surface-2: #171125;
+  --color-line: #271c3e;
+  --color-line-2: #3a2a58;
+  --color-text: #f4f1fa;
+  --color-muted: #aaa0c2;
+  --color-faint: #6d6388;
+  /* electric flash palette — magenta + violet */
+  --color-green: #ff2d9c;
+  --color-lime: #ff2d9c;
+  --color-magenta: #ff2d9c;
+  --color-pink: #ff5db1;
+  --color-cyan: #b069ff;
+  --color-violet: #8a5bff;
+  --color-error: #ff4d6d;
 
-  /* vintage / paper world */
-  --color-paper: #e9e3d4;
-  --color-paper-2: #ded7c4;
-  --color-ink: #181712;
-  --color-ink-soft: #4a463c;
-  --color-ink-faint: #8a8472;
-  --color-vermillion: #e5533d;
-  --color-rule: #c3bca7;
+  /* legacy aliases (kept so old utility classes still resolve) */
+  --color-paper: #100a20;
+  --color-paper-2: #171026;
+  --color-ink: #f4f1fa;
+  --color-ink-soft: #aaa0c2;
+  --color-ink-faint: #6d6388;
+  --color-vermillion: #ff2d9c;
+  --color-rule: #3a2a58;
 
   --font-display: var(--font-display), "Space Grotesk", sans-serif;
   --font-sans: var(--font-display), "Space Grotesk", sans-serif;
@@ -61,8 +64,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-green);
-  color: #04140a;
+  background: var(--color-magenta);
+  color: #0a0612;
 }
 
 a {
@@ -182,7 +185,7 @@ html.lenis body {
   background: linear-gradient(
     100deg,
     var(--color-text) 0%,
-    var(--color-cyan) 55%,
+    var(--color-magenta) 50%,
     var(--color-violet) 100%
   );
   -webkit-background-clip: text;
@@ -191,8 +194,8 @@ html.lenis body {
 }
 
 .text-glow-green {
-  color: var(--color-green);
-  text-shadow: 0 0 28px rgba(184, 255, 61, 0.35);
+  color: var(--color-magenta);
+  text-shadow: 0 0 28px rgba(255, 45, 156, 0.4);
 }
 
 /* ============================================================
@@ -276,17 +279,20 @@ html.lenis body {
 }
 
 .btn-primary {
-  background: var(--color-green);
-  color: #05140a;
+  background: var(--color-magenta);
+  color: #120417;
 }
 .btn-primary::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--color-cyan);
+  background: var(--color-violet);
   transform: translateY(101%);
   transition: transform 0.5s var(--ease-out-expo);
+}
+.btn-primary:hover {
+  color: #f4f1fa;
 }
 .btn-primary:hover::after {
   transform: translateY(0);

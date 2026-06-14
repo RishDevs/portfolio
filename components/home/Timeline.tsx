@@ -1,6 +1,6 @@
 "use client"
 
-import { Reveal } from "@/components/Reveal"
+import { Reveal, RevealLines } from "@/components/Reveal"
 
 type Item = {
   year: string
@@ -53,67 +53,70 @@ const ITEMS: Item[] = [
 
 export function Timeline() {
   return (
-    <section className="paper section-pad border-t-2 border-[var(--color-ink)]" id="timeline">
+    <section className="section-pad relative" id="timeline">
       <div className="wrap">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="spec text-[var(--color-vermillion)]">§ 04 — The Record</p>
-            <h2 className="display-serif mt-4 text-[clamp(2.4rem,7vw,6rem)]">
-              From B.Tech
-              <br />
-              <span className="italic">to MS, and shipping.</span>
-            </h2>
+            <p className="label mb-5 text-[var(--color-magenta)]">/ 03 — The Record</p>
+            <RevealLines
+              className="display-xl"
+              lines={["From B.Tech", "to MS, and shipping."]}
+            />
           </div>
-          <p className="max-w-xs spec text-ink-soft">
+          <p className="max-w-xs label-sm leading-relaxed text-faint">
             The line begins at B.Tech ’21 and runs through MS ’25 — every entry a
             step toward building systems.
           </p>
         </div>
 
-        <div className="border-t border-[var(--color-ink)]">
-          {ITEMS.map((item, i) => (
-            <Reveal key={i} delay={i * 50}>
-              <div
-                className={`group grid gap-4 border-b border-[var(--color-rule)] py-8 md:grid-cols-[7rem_1fr] md:gap-12 md:py-9 ${
-                  item.anchor ? "bg-[var(--color-paper-2)]/60" : ""
-                }`}
-              >
-                <div className="flex items-start gap-3 md:justify-end md:pr-8">
-                  {item.anchor && (
+        <div className="relative">
+          <div className="absolute left-0 top-0 hidden h-full w-px bg-[var(--color-line)] md:left-[8rem] md:block" />
+          <div className="flex flex-col">
+            {ITEMS.map((item, i) => (
+              <Reveal key={i} delay={i * 60}>
+                <div
+                  className={`group relative grid gap-4 border-b border-[var(--color-line)] py-8 md:grid-cols-[8rem_1fr] md:gap-12 md:py-10 ${
+                    item.anchor ? "bg-[var(--color-surface)]/40" : ""
+                  }`}
+                >
+                  <div className="flex items-start md:justify-end md:pr-12">
                     <span
-                      className="mt-3 inline-block h-2 w-2 shrink-0 rounded-full bg-[var(--color-vermillion)]"
-                      aria-hidden
+                      className={`font-mono text-2xl transition-colors md:text-3xl ${
+                        item.anchor
+                          ? "text-[var(--color-magenta)]"
+                          : "text-faint group-hover:text-[var(--color-magenta)]"
+                      }`}
+                    >
+                      {item.year}
+                    </span>
+                  </div>
+                  <div className="md:pl-12">
+                    <span
+                      className={`absolute left-[8rem] top-10 hidden h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[var(--color-bg)] transition-colors md:block ${
+                        item.anchor
+                          ? "bg-[var(--color-magenta)]"
+                          : "bg-[var(--color-line-2)] group-hover:bg-[var(--color-magenta)]"
+                      }`}
                     />
-                  )}
-                  <span
-                    className={`index-num text-3xl md:text-4xl ${
-                      item.anchor
-                        ? "text-[var(--color-vermillion)]"
-                        : "text-ink-faint group-hover:text-ink"
-                    }`}
-                  >
-                    {item.year}
-                  </span>
+                    <h3 className="display-lg">{item.title}</h3>
+                    <p className="mt-1 font-mono text-sm text-[var(--color-violet)]">
+                      {item.place}
+                    </p>
+                    <p className="mt-4 max-w-[60ch] text-muted">{item.body}</p>
+                    <span
+                      className={`mt-5 inline-block chip ${
+                        item.anchor
+                          ? "border-[var(--color-magenta)] text-[var(--color-magenta)]"
+                          : "border-[var(--color-line-2)] text-muted"
+                      }`}
+                    >
+                      ↑ {item.tag}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="display-lg text-ink">{item.title}</h3>
-                  <p className="mt-1 font-mono text-sm text-ink-soft">
-                    {item.place}
-                  </p>
-                  <p className="mt-4 max-w-[60ch] text-ink-soft">{item.body}</p>
-                  <span
-                    className={`mt-5 inline-block chip-ink ${
-                      item.anchor
-                        ? "border-[var(--color-vermillion)] text-[var(--color-vermillion)]"
-                        : ""
-                    }`}
-                  >
-                    {item.tag}
-                  </span>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -86,17 +86,17 @@ const fragment = /* glsl */ `
     float glow = smoothstep(0.55, 0.0, d) * 0.5;
     f += glow * (0.6 + 0.4 * sin(uTime * 0.6));
 
-    // palette — techno: midnight navy + electric blue with red flares
-    vec3 base = vec3(0.020, 0.035, 0.071); // #050912
-    vec3 deep = vec3(0.039, 0.106, 0.255); // #0A1B41 deep blue
-    vec3 blue = vec3(0.176, 0.490, 1.000);  // #2D7DFF
-    vec3 red  = vec3(1.000, 0.176, 0.271);  // #FF2D45
+    // palette — Cobalt & Chalk: ink base, electric cobalt energy, tangerine flares
+    vec3 base   = vec3(0.027, 0.031, 0.059); // #07080F
+    vec3 deep   = vec3(0.043, 0.063, 0.188); // #0B1030 cobalt-dark
+    vec3 cobalt = vec3(0.153, 0.278, 1.000);  // #2747FF
+    vec3 orange = vec3(1.000, 0.302, 0.180);  // #FF4D2E
 
     vec3 col = mix(base, deep, smoothstep(-0.6, 0.6, f));
-    col = mix(col, blue * 0.72, smoothstep(0.05, 0.75, f) * 0.88);
-    col = mix(col, red * 0.5, smoothstep(0.5, 1.0, length(r)) * 0.5);
-    col += blue * glow * 0.5;
-    col += red * glow * 0.22;
+    col = mix(col, cobalt * 0.85, smoothstep(0.05, 0.78, f) * 0.9);
+    col = mix(col, orange * 0.4, smoothstep(0.55, 1.0, length(r)) * 0.42);
+    col += cobalt * glow * 0.55;
+    col += orange * glow * 0.16;
 
     // vignette
     float vig = smoothstep(1.25, 0.25, length((uv - 0.5) * vec2(uAspect, 1.0)));

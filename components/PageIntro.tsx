@@ -22,12 +22,12 @@ export function PageIntro({
       {/* animated aurora field */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
         <div
-          className="animate-blob absolute -left-[10%] top-[-20%] h-[55vh] w-[55vh] rounded-full opacity-50 blur-[90px]"
-          style={{ background: "radial-gradient(circle, #2d7dff, transparent 65%)" }}
+          className="animate-blob absolute -left-[10%] top-[-20%] h-[55vh] w-[55vh] rounded-full opacity-55 blur-[90px]"
+          style={{ background: "radial-gradient(circle, #2747ff, transparent 65%)" }}
         />
         <div
-          className="animate-blob-2 absolute right-[-10%] top-[10%] h-[45vh] w-[45vh] rounded-full opacity-40 blur-[100px]"
-          style={{ background: "radial-gradient(circle, #ff2d45, transparent 65%)" }}
+          className="animate-blob-2 absolute right-[-10%] top-[10%] h-[45vh] w-[45vh] rounded-full opacity-35 blur-[100px]"
+          style={{ background: "radial-gradient(circle, #ff4d2e, transparent 65%)" }}
         />
         <div className="bg-grid absolute inset-0 opacity-70" />
         <div

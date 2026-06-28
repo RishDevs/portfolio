@@ -28,7 +28,17 @@
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
       "Bash(git checkout *)",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/resume)",
-      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/Rishi_Kolluru_Resume.pdf)"
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/Rishi_Kolluru_Resume.pdf)",
+      "Bash(curl -fsSL https://paxel.ycombinator.com/upload.sh -o /tmp/paxel-upload.sh)",
+      "Read(//tmp/**)",
+      "Bash(docker info *)",
+      "Bash(grep -nE '\\\\-\\\\-[a-z]+\\\\\\)|case \"\\\\$|--all|--project|--yes|--help|usage\\\\\\(\\\\\\)|\"\\\\-\\\\-' paxel-upload.sh)",
+      "Bash(open -a Docker)",
+      "Bash(curl -fsSL \"https://api.github.com/users/RishDevs/repos?per_page=100&sort=pushed\")",
+      "Bash(echo \"=== ~/.antigravity top-level structure \\(where agent convos likely live\\) ===\" *)",
+      "Bash(command -v sqlite3)",
+      "Bash(sqlite3 '/Users/krrish/Library/Application Support/Antigravity/User/workspaceStorage/7b9c290ca1f138f83e40603ebeb079bb/state.vscdb' 'SELECT key, length\\(value\\) FROM ItemTable ORDER BY length\\(value\\) DESC LIMIT 25;')",
+      "Bash(git push *)"
     ]
   }
 }

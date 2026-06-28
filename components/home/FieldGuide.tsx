@@ -34,7 +34,7 @@ export function FieldGuide() {
         className="pointer-events-none absolute inset-0 -z-0 opacity-60"
         style={{
           background:
-            "radial-gradient(60% 60% at 15% 0%, rgba(45,125,255,0.12), transparent 60%), radial-gradient(60% 60% at 100% 100%, rgba(255,45,69,0.1), transparent 60%)",
+            "radial-gradient(60% 60% at 15% 0%, rgba(39,71,255,0.14), transparent 60%), radial-gradient(60% 60% at 100% 100%, rgba(255,77,46,0.09), transparent 60%)",
         }}
       />
       <div className="wrap relative">

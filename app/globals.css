@@ -4,35 +4,35 @@
    DESIGN TOKENS
    ============================================================ */
 @theme {
-  --color-bg: #050912;
-  --color-bg-2: #0a1428;
-  --color-surface: #091122;
-  --color-surface-2: #111d36;
-  --color-line: #1b2942;
-  --color-line-2: #2a3d61;
-  --color-text: #eaf1ff;
-  --color-muted: #9fb2d4;
-  --color-faint: #5f7299;
-  /* techno palette — electric blue + red (two colors only) */
-  --color-blue: #2d7dff;
-  --color-red: #ff2d45;
-  --color-yellow: #ff2d45;
-  --color-green: #2d7dff;
-  --color-lime: #2d7dff;
-  --color-magenta: #2d7dff;
-  --color-pink: #ff2d45;
-  --color-cyan: #ff2d45;
-  --color-violet: #ff2d45;
-  --color-error: #ff2d45;
+  --color-bg: #07080f;
+  --color-bg-2: #0b1030;
+  --color-surface: #0e1018;
+  --color-surface-2: #171a26;
+  --color-line: #20242f;
+  --color-line-2: #2e3442;
+  --color-text: #f3f4f8;
+  --color-muted: #a6acbb;
+  --color-faint: #5b6170;
+  /* Cobalt & Chalk — electric cobalt + chalk, hot tangerine pop */
+  --color-blue: #2747ff;
+  --color-red: #ff4d2e;
+  --color-yellow: #ff4d2e;
+  --color-green: #2747ff;
+  --color-lime: #2747ff;
+  --color-magenta: #2747ff;
+  --color-pink: #ff4d2e;
+  --color-cyan: #ff4d2e;
+  --color-violet: #ff4d2e;
+  --color-error: #ff4d2e;
 
   /* legacy aliases (kept so old utility classes still resolve) */
-  --color-paper: #0a1428;
-  --color-paper-2: #111d36;
-  --color-ink: #eaf1ff;
-  --color-ink-soft: #9fb2d4;
-  --color-ink-faint: #5f7299;
-  --color-vermillion: #ff2d45;
-  --color-rule: #2a3d61;
+  --color-paper: #0b1030;
+  --color-paper-2: #171a26;
+  --color-ink: #f3f4f8;
+  --color-ink-soft: #a6acbb;
+  --color-ink-faint: #5b6170;
+  --color-vermillion: #ff4d2e;
+  --color-rule: #2e3442;
 
   --font-display: var(--font-display), "Space Grotesk", sans-serif;
   --font-sans: var(--font-display), "Space Grotesk", sans-serif;
@@ -68,7 +68,7 @@ body {
 
 ::selection {
   background: var(--color-blue);
-  color: #eaf1ff;
+  color: #f3f4f8;
 }
 
 a {
@@ -188,8 +188,8 @@ html.lenis body {
   background: linear-gradient(
     100deg,
     var(--color-text) 0%,
-    var(--color-blue) 55%,
-    #6fb0ff 100%
+    var(--color-blue) 60%,
+    #6f80ff 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -198,7 +198,7 @@ html.lenis body {
 
 .text-glow-green {
   color: var(--color-blue);
-  text-shadow: 0 0 28px rgba(45, 125, 255, 0.45);
+  text-shadow: 0 0 28px rgba(39, 71, 255, 0.5);
 }
 
 /* ============================================================
@@ -452,10 +452,10 @@ html.lenis body {
 /* faint engineering grid */
 .bg-grid {
   background-image: linear-gradient(
-      rgba(157, 178, 212, 0.06) 1px,
+      rgba(166, 172, 187, 0.06) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(157, 178, 212, 0.06) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(166, 172, 187, 0.06) 1px, transparent 1px);
   background-size: 46px 46px;
 }
 

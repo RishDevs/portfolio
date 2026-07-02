@@ -140,6 +140,14 @@ html.lenis body {
   letter-spacing: -0.03em;
 }
 
+/* ss02 = Space Grotesk's curved 'y' (the default angular 'y' reads
+   awkwardly at display sizes) */
+.display-hero,
+.display-xl,
+.display-lg {
+  font-feature-settings: "ss02";
+}
+
 .label {
   font-family: var(--font-mono);
   font-size: 0.72rem;

@@ -38,7 +38,10 @@
       "Bash(echo \"=== ~/.antigravity top-level structure \\(where agent convos likely live\\) ===\" *)",
       "Bash(command -v sqlite3)",
       "Bash(sqlite3 '/Users/krrish/Library/Application Support/Antigravity/User/workspaceStorage/7b9c290ca1f138f83e40603ebeb079bb/state.vscdb' 'SELECT key, length\\(value\\) FROM ItemTable ORDER BY length\\(value\\) DESC LIMIT 25;')",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(vercel --prod --yes)",
+      "Bash(curl -s -o /dev/null -w \"home HTTP %{http_code}\\\\n\" https://rishi-kolluru.vercel.app/)",
+      "Bash(claude mcp *)"
     ]
   }
 }

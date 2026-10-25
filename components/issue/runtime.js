@@ -175,14 +175,15 @@ export class IssueRuntime {
     let pend = 'idle', pendAt = 0, prev = null, prevA = 0
     const render = (form, a, t) => {
       if (a <= 0) return
-      const S = strands(form, t), op = (form === 'idle' ? 0.22 : 0.9) * a
+      // Kept low so the wires read as background texture, not foreground lines.
+      const S = strands(form, t), op = (form === 'idle' ? 0.14 : 0.42) * a
       ctx.lineCap = 'round'; ctx.lineJoin = 'round'
       S.forEach(st => { ctx.globalAlpha = op; path(st.fn, 90); ctx.strokeStyle = '#16110e'; ctx.lineWidth = st.wd + 2.6; ctx.stroke(); ctx.strokeStyle = st.col; ctx.lineWidth = st.wd; ctx.stroke() })
       if (form === 'idle') return
       S.forEach((st, k) => {
         for (let b = 0; b < 3; b++) {
           const s = ((t * (0.09 + (k % 3) * 0.02)) + b / 3 + k * 0.137) % 1, [x, y] = st.fn(s), r = st.wd + 2.2
-          ctx.globalAlpha = a * Math.min(1, Math.sin(s * Math.PI) * 3)
+          ctx.globalAlpha = 0.55 * a * Math.min(1, Math.sin(s * Math.PI) * 3)
           ctx.fillStyle = '#fffaf0'; ctx.strokeStyle = '#16110e'; ctx.lineWidth = 2
           ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.stroke()
           ctx.fillStyle = st.col; ctx.beginPath(); ctx.arc(x, y, r * 0.45, 0, 6.283); ctx.fill()
@@ -201,7 +202,34 @@ export class IssueRuntime {
       ctx.clearRect(0, 0, w, h)
       if (prev) render(prev, prevA, t)
       render(cur, alpha, t)
+      clearBehindText()
       ctx.globalAlpha = 1
+    }
+    // Chapter titles sit on the bare page (cards and panels are opaque), so cut
+    // the wires out around each line of title text with a soft edge — they
+    // pass behind the titles instead of through the letters.
+    const titles = [...this.$$('[data-ch] h2'), label].filter(Boolean)
+    const range = document.createRange()
+    const clearBehindText = () => {
+      const c = cv.getBoundingClientRect()
+      ctx.save()
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fillStyle = '#000'
+      titles.forEach(el => {
+        const r = el.getBoundingClientRect()
+        if (r.bottom < c.top - 40 || r.top > c.bottom + 40) return
+        range.selectNodeContents(el)
+        for (const l of range.getClientRects()) {
+          const x = l.left - c.left, y = l.top - c.top
+          // Titles near the page edge: clear to the edge, so no wire stubs are left in the gap.
+          const x0 = x < 80 ? -40 : x
+          ;[[28, 0.35], [18, 0.6], [10, 1]].forEach(([pad, al]) => {
+            ctx.globalAlpha = al
+            ctx.fillRect(x0 - pad, y - pad * 0.6, l.width + (x - x0) + pad * 2, l.height + pad * 1.2)
+          })
+        }
+      })
+      ctx.restore()
     }
     this.io(([e]) => { vis = e.isIntersecting }).observe(cv)
     raf = requestAnimationFrame(draw); this.off.push(() => cancelAnimationFrame(raf))

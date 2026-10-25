@@ -21,6 +21,16 @@ a:hover { color: #16110e; }
 ::selection { background: #ec2a7a; color: #fffaf0; }
 a:focus-visible, button:focus-visible { outline: 3px solid #ec2a7a; outline-offset: 3px; }
 
+/* Below ~1024px the chapter tracker (bottom-left) and the scene caption
+   (bottom-right) collide; lift the caption above the tracker's row. */
+@media (max-width: 1023px) {
+  [data-scene-label] {
+    bottom: 66px !important;
+    left: clamp(12px, 2.4vw, 28px);
+    text-align: right;
+  }
+}
+
 /* Hide reveal-animated elements until the runtime has taken over, so there is
    no flash of the final state before hydration. The head script drops the
    `js` class if the runtime never starts, so content can't stay hidden. */

@@ -31,6 +31,30 @@ a:focus-visible, button:focus-visible { outline: 3px solid #ec2a7a; outline-offs
   }
 }
 
+/* Small phones: at the design's 24px minimum the contact email button is
+   wider than the screen; scale it with the viewport below 480px. */
+@media (max-width: 479px) {
+  #contact a[href^="mailto:"] {
+    font-size: clamp(16px, 5.4vw, 24px) !important;
+    padding: 14px 16px !important;
+    max-width: 100%;
+  }
+}
+
+/* Tall/large desktop screens: keep the masthead strip at the top and center
+   the hero row in the rest of the first screen, instead of leaving the lower
+   half empty. */
+@media (min-width: 1024px) {
+  #cover > div:not([data-rays]) { min-height: 100vh; }
+  #cover > div:not([data-rays]) > div:nth-child(2) { flex: 1 1 auto; align-content: center; }
+}
+
+/* Touch: give the small "Back to cover" link a 24px+ tap target without
+   moving it. */
+@media (pointer: coarse) {
+  #contact a[href="#cover"] { display: inline-block; padding: 8px 0; margin: -8px 0; }
+}
+
 /* Hide reveal-animated elements until the runtime has taken over, so there is
    no flash of the final state before hydration. The head script drops the
    `js` class if the runtime never starts, so content can't stay hidden. */

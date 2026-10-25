@@ -215,24 +215,51 @@ export class IssueRuntime {
       size(); this.listen(window, 'resize', size)
       const hangs = [...host.querySelectorAll('[data-hang]')]
       if (!this.reduce) hangs.forEach((el, i) => { el.style.transformOrigin = '50% -40px'; this.anim(el, [{ rotate: '-1.2deg' }, { rotate: '1.2deg' }, { rotate: '-1.2deg' }], { duration: 3600 + i * 420, iterations: Infinity, easing: 'ease-in-out', delay: -i * 700 }) })
-      const thread = (x1, y1, x2, y2, sag, t, ph, ink, col, wd) => {
-        const cx = (x1 + x2) / 2 + Math.sin(t * 1.3 + ph) * 18, cy = (y1 + y2) / 2 + sag + Math.cos(t * 1.1 + ph) * 10;
+      const thread = (x1, y1, x2, y2, sag, t, ph, ink, col, wd, amp = 1) => {
+        const cx = (x1 + x2) / 2 + Math.sin(t * 1.3 + ph) * 18 * amp, cy = (y1 + y2) / 2 + sag + Math.cos(t * 1.1 + ph) * 10 * amp;
         [[col, 2.5, 2], [ink, 0, 0]].forEach(([c, ox, oy]) => { ctx.strokeStyle = c; ctx.lineWidth = wd; ctx.beginPath(); ctx.moveTo(x1 + ox, y1 + oy); ctx.quadraticCurveTo(cx + ox, cy + oy, x2 + ox, y2 + oy); ctx.stroke() })
       }
+      // Where a card's two top corners actually are right now (in canvas space),
+      // including its swing (`rotate`), reveal/hover `transform`, and opacity —
+      // so the wires stay attached to the card instead of a fixed layout point.
+      const pose = el => {
+        let x = 0, y = 0, n = el
+        while (n && n !== host) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent }
+        const cs = getComputedStyle(el), cw = el.offsetWidth
+        const [ox, oy] = cs.transformOrigin.split(' ').map(parseFloat)
+        const m = new DOMMatrix().translate(ox, oy)
+          .rotate(cs.rotate && cs.rotate !== 'none' ? parseFloat(cs.rotate) : 0)
+          .multiply(cs.transform && cs.transform !== 'none' ? new DOMMatrix(cs.transform) : new DOMMatrix())
+          .translate(-ox, -oy)
+        const tl = m.transformPoint({ x: 0, y: 0 }), tr = m.transformPoint({ x: cw, y: 0 })
+        return { l: [x + tl.x, y + tl.y], r: [x + tr.x, y + tr.y], top: y, cx: x + cw / 2, op: +cs.opacity }
+      }
+      // Short hangers: each card hangs from its own peg just above it, so the
+      // wires never cross the heading or a row of cards above (when wrapped).
+      const PEG = 22
       const draw = now => {
         raf = requestAnimationFrame(draw)
         if (!vis) return
         const t = this.reduce ? 0 : now / 1000
         ctx.clearRect(0, 0, w, h); ctx.lineCap = 'round'
         if (kind !== 'issue') return
-        ctx.globalAlpha = 0.9
-        const tops = hangs.map(el => { let x = el.offsetWidth / 2, y = 0, n = el; while (n && n !== host) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent } return [x, y] })
-        tops.forEach((p, i) => {
-          thread(p[0] - 30, 0, p[0], p[1] + 2, 6, t, i, '#fffaf0', i % 2 ? '#0f9a94' : '#ec2a7a', 2)
-          thread(p[0] + 30, 0, p[0], p[1] + 2, 6, t, i + 2, '#fffaf0', '#ffa41b', 1.4)
+        const cards = hangs.map(pose)
+        cards.forEach((c, i) => {
+          if (c.op < 0.02) return
+          const px = c.cx, py = c.top - PEG
+          ctx.globalAlpha = 0.9 * c.op
+          thread(px, py, c.l[0] + 10, c.l[1] + 1, 2, t, i, '#fffaf0', i % 2 ? '#0f9a94' : '#ec2a7a', 2, 0.15)
+          thread(px, py, c.r[0] - 10, c.r[1] + 1, 2, t, i + 2, '#fffaf0', '#ffa41b', 1.4, 0.15)
+          ctx.globalAlpha = c.op; ctx.fillStyle = '#fffaf0'
+          ctx.beginPath(); ctx.arc(px, py, 3, 0, 6.283); ctx.fill()
         })
-        ctx.globalAlpha = 0.45
-        for (let i = 0; i < tops.length - 1; i++) { const a = tops[i], b = tops[i + 1]; if (Math.abs(a[1] - b[1]) < 40) thread(a[0], a[1] + 2, b[0], b[1] + 2, 34, t, i * 2, '#fffaf0', '#ec2a7a', 1.4) }
+        // Garland between neighbouring pegs on the same row.
+        for (let i = 0; i < cards.length - 1; i++) {
+          const a = cards[i], b = cards[i + 1]
+          if (Math.abs(a.top - b.top) >= 40) continue
+          ctx.globalAlpha = 0.45 * Math.min(a.op, b.op)
+          thread(a.cx, a.top - PEG, b.cx, b.top - PEG, 10, t, i * 2, '#fffaf0', '#ec2a7a', 1.4, 0.4)
+        }
         ctx.globalAlpha = 0.18; ctx.strokeStyle = '#fffaf0'; ctx.lineWidth = 1.2
         for (let k = 0; k < 4; k++) { ctx.beginPath(); for (let i = 0; i <= 60; i++) { const s = i / 60, x = s * w, y = h * (0.88 + k * 0.03) + Math.sin(s * 8 + t * 1.2 + k) * 8; if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y) } ctx.stroke() }
         ctx.globalAlpha = 1

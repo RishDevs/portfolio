@@ -1,89 +1,55 @@
-import type { Metadata } from "next"
-import { Space_Grotesk, IBM_Plex_Mono, Instrument_Serif } from "next/font/google"
+import type { Metadata, Viewport } from "next"
 import "./globals.css"
-import { site } from "@/lib/site"
-import { SmoothScroll } from "@/components/SmoothScroll"
-import { Cursor } from "@/components/Cursor"
-import { Grain } from "@/components/Grain"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
-import { CommandMenu } from "@/components/CommandMenu"
-import { Preloader } from "@/components/Preloader"
 
-const display = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-})
+const title = "Rishi Kolluru — ML / AI Engineer · Issue 01"
+const description =
+  "Rishi Kolluru — ML / AI engineer (MS CS, University at Buffalo, Dec 2026). LLM serving at 12.2× throughput, hybrid retrieval +12.6 nDCG@10, and a distilled cascade with 68% fewer LLM calls."
 
-const mono = IBM_Plex_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-})
-
-const serif = Instrument_Serif({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic", "normal"],
-  display: "swap",
-})
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rishikolluru.com"),
-  title: {
-    default: "Rishi Kolluru — AI Research Engineer",
-    template: "%s — Rishi Kolluru",
-  },
-  description: site.subtitle,
-  keywords: [
-    "Rishi Kolluru",
-    "AI engineer",
-    "ML engineer",
-    "multimodal retrieval",
-    "RAG",
-    "LLM agents",
-    "machine learning",
-    "University at Buffalo",
-  ],
-  authors: [{ name: site.name, url: site.github }],
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  authors: [{ name: "Rishi Kolluru", url: "https://github.com/RishDevs" }],
   openGraph: {
-    title: "Rishi Kolluru — AI Research Engineer",
-    description: site.tagline,
+    title,
+    description,
     type: "website",
     siteName: "Rishi Kolluru",
+    images: [{ url: "/rishi-comic.jpg", width: 880, height: 1320, alt: "Rishi Kolluru, illustrated as a comic hero" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Rishi Kolluru — AI Research Engineer",
-    description: site.tagline,
-  },
+  twitter: { card: "summary_large_image", title, description, images: ["/rishi-comic.jpg"] },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f4e9d2",
+}
+
+// Runs before first paint: enables the pre-reveal hiding in globals.css, with a
+// failsafe that reveals everything if the page runtime never starts.
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');setTimeout(function(){if(!d.dataset.issueReady)d.classList.remove('js')},5000)})();`
+
+const preloadFonts = [
+  "/fonts/archivo-latin.woff2",
+  "/fonts/rozha-one-latin.woff2",
+  "/fonts/space-mono-400-latin.woff2",
+]
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${mono.variable} ${serif.variable}`}
-    >
-      <body>
-        <Preloader />
-        <Grain />
-        <Cursor />
-        <SmoothScroll>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </SmoothScroll>
-        <CommandMenu />
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+        {preloadFonts.map((href) => (
+          <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
+        ))}
+      </head>
+      <body>{children}</body>
     </html>
   )
 }

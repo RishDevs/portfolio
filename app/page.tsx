@@ -1,23 +1,11 @@
-import { Hero } from "@/components/hero/Hero"
-import { ProofStrip } from "@/components/home/ProofStrip"
-import { FeaturedWork } from "@/components/home/FeaturedWork"
-import { SystemPipeline } from "@/components/home/SystemPipeline"
-import { FieldGuide } from "@/components/home/FieldGuide"
-import { Timeline } from "@/components/home/Timeline"
-import { LabPreview } from "@/components/home/LabPreview"
-import { ContactCTA } from "@/components/home/ContactCTA"
+import { Issue } from "@/components/issue/Issue"
+import { hoverCss } from "@/components/issue/markup"
 
 export default function Home() {
   return (
-    <>
-      <Hero />
-      <ProofStrip />
-      <FeaturedWork />
-      <SystemPipeline />
-      <FieldGuide />
-      <Timeline />
-      <LabPreview />
-      <ContactCTA />
-    </>
+    <main>
+      <style dangerouslySetInnerHTML={{ __html: hoverCss }} />
+      <Issue />
+    </main>
   )
 }

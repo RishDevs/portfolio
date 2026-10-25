@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import { preload } from "react-dom"
 import "./globals.css"
 
 const title = "Rishi Kolluru — ML / AI Engineer · Issue 01"
@@ -41,13 +42,12 @@ const preloadFonts = [
 ]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // React dedupes these; hand-written <link rel="preload"> tags were emitted twice.
+  preloadFonts.forEach((href) => preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" }))
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
-        {preloadFonts.map((href) => (
-          <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
-        ))}
       </head>
       <body>{children}</body>
     </html>

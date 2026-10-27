@@ -17,12 +17,48 @@ html { scroll-behavior: smooth; background: #f4e9d2; }
 body { margin: 0; background: #f4e9d2; color: #16110e; font-family: Archivo, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 * { box-sizing: border-box; }
 a { color: #16110e; text-decoration: none; }
+a:hover { color: #16110e; }
 ::selection { background: #ec2a7a; color: #fffaf0; }
 a:focus-visible, button:focus-visible { outline: 3px solid #ec2a7a; outline-offset: 3px; }
 
-/* Hide panels until the runtime starts their wipe-in, so there is no flash of
-   the final state before hydration. The head script drops the `js` class if
-   the runtime never starts, so content can't stay hidden. */
+/* Below ~1024px the chapter tracker (bottom-left) and the scene caption
+   (bottom-right) collide; lift the caption above the tracker's row. */
+@media (max-width: 1023px) {
+  [data-scene-label] {
+    bottom: 66px !important;
+    left: clamp(12px, 2.4vw, 28px);
+    text-align: right;
+  }
+}
+
+/* Small phones: at the design's 24px minimum the contact email button is
+   wider than the screen; scale it with the viewport below 480px. */
+@media (max-width: 479px) {
+  #contact a[href^="mailto:"] {
+    font-size: clamp(16px, 5.4vw, 24px) !important;
+    padding: 14px 16px !important;
+    max-width: 100%;
+  }
+}
+
+/* Tall/large desktop screens: keep the masthead strip at the top and center
+   the hero row in the rest of the first screen, instead of leaving the lower
+   half empty. */
+@media (min-width: 1024px) {
+  #cover > div:not([data-rays]) { min-height: 100vh; }
+  #cover > div:not([data-rays]) > div:nth-child(2) { flex: 1 1 auto; align-content: center; }
+}
+
+/* Touch: give the small "Back to cover" link a 24px+ tap target without
+   moving it. */
+@media (pointer: coarse) {
+  #contact a[href="#cover"] { display: inline-block; padding: 8px 0; margin: -8px 0; }
+}
+
+/* Hide reveal-animated elements until the runtime has taken over, so there is
+   no flash of the final state before hydration. The head script drops the
+   `js` class if the runtime never starts, so content can't stay hidden. */
 @media (prefers-reduced-motion: no-preference) {
-  html.js:not([data-issue-ready]) [data-pop] { clip-path: inset(0 100% 0 0); }
+  html.js:not([data-issue-ready]) [data-pop],
+  html.js:not([data-issue-ready]) [data-chroma] { opacity: 0; }
 }

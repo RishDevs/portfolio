@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
       { source: "/resume", destination: RESUME_PATH, permanent: false },
       { source: "/cv", destination: RESUME_PATH, permanent: false },
       // Pages from the previous design now live as chapters on the home page.
-      { source: "/work/:slug*", destination: "/#contents", permanent: false },
+      { source: "/work/:slug*", destination: "/#issue", permanent: false },
       { source: "/systems", destination: "/#gateway", permanent: false },
       { source: "/lab", destination: "/#stack", permanent: false },
       { source: "/about", destination: "/#about", permanent: false },

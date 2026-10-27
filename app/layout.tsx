@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { preload } from "react-dom"
 import "./globals.css"
-import "./issue.css"
 
 const title = "Rishi Kolluru — ML / AI Engineer · Issue 01"
 const description =

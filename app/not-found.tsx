@@ -24,13 +24,13 @@ export default function NotFound() {
       <span
         style={{
           padding: "6px 12px",
-          background: "#ffa41b",
-          border: "2px solid #16110e",
-          fontFamily: "Archivo,sans-serif",
-          fontStretch: "75%",
-          fontSize: 13,
-          fontWeight: 800,
-          letterSpacing: ".05em",
+          background: "#ec2a7a",
+          border: "2.5px solid #16110e",
+          boxShadow: "4px 4px 0 #16110e",
+          fontFamily: "'Space Mono',monospace",
+          fontSize: 12,
+          fontWeight: 700,
+          letterSpacing: ".08em",
           textTransform: "uppercase",
         }}
       >
@@ -43,7 +43,7 @@ export default function NotFound() {
           fontWeight: 400,
           fontSize: "clamp(56px,9vw,140px)",
           lineHeight: 0.85,
-          textShadow: "3px 3px 0 #ec2a7a",
+          textShadow: "4px 4px 0 #ec2a7a,-3px -2px 0 #0f9a94",
         }}
       >
         This page isn&apos;t in the issue.
@@ -66,16 +66,16 @@ export default function NotFound() {
       >
         <Link
           href="/"
-          style={{ padding: "14px 22px", background: "#16110e", color: "#ffa41b", border: "3px solid #16110e", minHeight: 44, display: "inline-flex", alignItems: "center" }}
+          style={{ padding: "14px 22px", background: "#16110e", color: "#ffa41b", border: "3px solid #16110e", boxShadow: "5px 5px 0 #ec2a7a" }}
         >
-          Back to the cover
+          Back to the cover →
         </Link>
         <a
           href="/Rishi_Kolluru_Resume.pdf"
           download="Rishi-Kolluru-Resume.pdf"
-          style={{ padding: "14px 20px", background: "#ffa41b", border: "3px solid #16110e", minHeight: 44, display: "inline-flex", alignItems: "center" }}
+          style={{ padding: "14px 20px", background: "#ffa41b", border: "3px solid #16110e", boxShadow: "5px 5px 0 #16110e" }}
         >
-          Download résumé
+          Download résumé ↓
         </a>
       </div>
     </main>

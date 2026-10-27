@@ -28,3 +28,31 @@ a:focus-visible, button:focus-visible { outline: 3px solid #ec2a7a; outline-offs
   html.js:not([data-issue-ready]) [data-pop],
   html.js:not([data-issue-ready]) [data-chroma] { opacity: 0; }
 }
+
+/* ---- Small-screen fixes (no change on desktop) ---------------------------- */
+
+/* Top bar: three buttons fit on phones. */
+@media (max-width: 480px) {
+  div:has(> a[data-ask-open]) { gap: 6px !important; font-size: 13px !important; right: 8px !important; }
+  div:has(> a[data-ask-open]) > a { padding: 8px 9px !important; }
+}
+
+/* Below ~1024px the chapter tracker (bottom-left) and the scene caption
+   (bottom-right) collide; lift the caption above the tracker's row. */
+@media (max-width: 1023px) {
+  [data-scene-label] { bottom: 66px !important; left: clamp(12px, 2.4vw, 28px); text-align: right; }
+}
+
+/* Small phones: at the design's 24px minimum the contact email button is
+   wider than the screen; scale it with the viewport. */
+@media (max-width: 479px) {
+  #contact a[href^="mailto:"] { font-size: clamp(16px, 5.4vw, 24px) !important; padding: 14px 16px !important; max-width: 100%; }
+}
+
+/* Touch: every control on the page gets a 44px tap target. Inline styles in
+   the design markup still set each control's own display and padding. */
+@media (pointer: coarse) {
+  .issue-root a, .issue-root button { min-height: 44px; }
+  .issue-root a { display: inline-flex; align-items: center; }
+  #contact a[href="#cover"] { padding: 0; margin: -10px 0; }
+}

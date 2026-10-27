@@ -28,29 +28,22 @@ live, interactive demo and numbers that each come with a baseline.
 ## Stack
 
 - [Next.js 16](https://nextjs.org) (App Router; the page is static, `/api/ask` is the only server route)
-- Build 5 of the Claude Design comic:
-  - `components/issue/markup.ts` — the page markup
-  - `app/issue.css` — the surface system (panel, caption, sticker) and layout
-  - `components/issue/runtime.js` — motion, demos, chapter wire scene, Letters page
-  - `components/issue/Issue.tsx` — mounts the runtime with full cleanup
+- The Claude Design comic, ported 1:1:
+  - `components/issue/markup.ts` — the page markup (generated from the export)
+  - `components/issue/runtime.js` — animation, demos and the chapter wire scene
+  - `components/issue/Issue.tsx` — mounts the runtime and opens the assistant
 - Self-hosted fonts: Rozha One, Archivo, Space Mono (`public/fonts`)
 - Deployed on Vercel
 
-## Letters (chatbot)
+## Ask Rishi's AI (optional)
 
-The Letters page answers questions about Rishi from his résumé only.
-`POST /api/ask {"q": "..."}` retrieves passages with BM25 (`lib/ask/kb.ts`,
-`lib/ask/bm25.ts`) and then writes the reply with the first available model:
-
-| Env var | Effect |
-| --- | --- |
-| `GROQ_API_KEY` (+ optional `GROQ_MODEL`, default `llama-3.1-8b-instant`) | Groq free tier — use this in production |
-| `OLLAMA_URL` (+ optional `OLLAMA_MODEL`, default `llama3.1:8b`) | Local Ollama for development |
-| neither | Quotes the best-matching passage as written |
-
-Add the Groq key on Vercel with `vercel env add GROQ_API_KEY production`,
-then redeploy. To edit what the bot knows, edit the passages in
-`lib/ask/kb.ts`.
+**Ask my spidey sense** in the top bar opens a small assistant that answers
+questions about the projects, experience, skills and education, from the
+résumé and the project repositories only, with sources. It has Recruiter and
+Engineer modes, costs $0 to run (retrieval-only by default, Groq's free plan
+if `GROQ_API_KEY` is set; xAI Grok has no free API tier), and is loaded only
+when opened. Architecture, cost guarantees and the 42-question evaluation are
+in [docs/assistant.md](docs/assistant.md).
 
 ## Résumé
 
@@ -66,6 +59,13 @@ npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run lint
+```
+
+Assistant evaluation (42 questions, see `docs/assistant.md`):
+
+```bash
+npm run build && ASK_IP_LIMIT=10000 npx next start -p 3007
+node scripts/eval-ask.mjs http://localhost:3007
 ```
 
 Deploy:

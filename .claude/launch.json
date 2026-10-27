@@ -28,6 +28,8 @@
       "runtimeArgs": [
         "OLLAMA_URL=http://localhost:11434",
         "OLLAMA_MODEL=qwen2.5:7b-instruct",
+        "ASK_IP_LIMIT=10000",
+        "LLM_TIMEOUT_MS=45000",
         "npx",
         "next",
         "start",
@@ -35,6 +37,19 @@
         "3006"
       ],
       "port": 3006
+    },
+    {
+      "name": "portfolio-eval",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "ASK_IP_LIMIT=10000",
+        "npx",
+        "next",
+        "start",
+        "-p",
+        "3007"
+      ],
+      "port": 3007
     }
   ]
 }

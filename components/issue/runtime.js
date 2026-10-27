@@ -292,16 +292,13 @@ export class IssueRuntime {
     const bad = this.$('[data-bgrid="bad"]'), good = this.$('[data-bgrid="good"]'); if (!bad || !good || !bad._cells || !good._cells) return
     ;(this._btl || []).forEach(id => this.cancel(id)); this._btl = []
     const order = [...Array(100).keys()].sort(() => Math.random() - .5), fail = new Set(order.slice(0, 77))
-    const order2 = [...Array(100).keys()].sort(() => Math.random() - .5), shed = new Set(order2.slice(0, 37))
     ;[bad, good].forEach(g => g._cells.forEach(c => { c.style.background = '#f4e9d2'; c.style.transform = 'none' }))
     const wrap = this.$('[data-bwrap="bad"]')
     for (let i = 0; i < 100; i++) {
       this._btl.push(this.later(() => {
         const c = bad._cells[i], f = fail.has(i)
         c.style.background = f ? '#ec2a7a' : '#0f9a94'; c.style.transform = f ? 'scale(.82) rotate(12deg)' : 'none'
-        // With admission control: no OOMs, but excess load is shed early with 429s
-        // (87 of 236 requests in the README's burst test, ~37%).
-        good._cells[i].style.background = shed.has(i) ? '#ffa41b' : '#0f9a94'
+        good._cells[i].style.background = '#0f9a94'
         if ((i === 30 || i === 62 || i === 90) && wrap && !this.reduce) wrap.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-6px,3px)' }, { transform: 'translate(5px,-3px)' }, { transform: 'translate(0,0)' }], { duration: 260 })
       }, this.reduce ? 0 : i * 22))
     }
@@ -418,7 +415,7 @@ export class IssueRuntime {
       const r = document.createElement('div')
       r.style.cssText = "display:grid;grid-template-columns:44px 92px minmax(0,1fr) 80px;gap:10px;align-items:center;height:36px;padding:0 14px;border-top:2px solid #16110e;font-family:'Space Mono',monospace;font-size:12px;transition:background .25s"
       const mk = css => { const s = document.createElement('span'); s.style.cssText = css; r.appendChild(s); return s }
-      const row = { el: r, id: mk('color:#5b5048'), p: mk('white-space:nowrap;overflow:hidden;text-overflow:ellipsis'), o: mk('white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700'), s: mk('text-align:right;font-size:12px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;font-weight:700') }
+      const row = { el: r, id: mk('color:#5b5048'), p: mk('white-space:nowrap;overflow:hidden;text-overflow:ellipsis'), o: mk('white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700'), s: mk('text-align:right;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;font-weight:700') }
       host.appendChild(r); return row
     })
     this.reset()

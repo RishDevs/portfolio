@@ -1,3 +1,5 @@
+<img src=".github/header.svg" width="100%" alt="portfolio — Portfolio — README header">
+
 # Rishi Kolluru — Portfolio · Issue 01
 
 A single-page, comic-book-style portfolio for **Rishi Kolluru**, ML / AI engineer
